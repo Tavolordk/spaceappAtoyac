@@ -13,12 +13,12 @@ const Home: NextPage = () => {
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="google-site-verification" content="FXLDrLf4nP7qfMs1lr1pAxpu-kU7Dpe-ynnBBkASQzE" />
         <title>NASA Space Apps Challenge 2025 | Atoyac de Álvarez</title>
         <meta
           name="description"
           content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Vive una experiencia única de innovación y colaboración para resolver desafíos relacionados con la Tierra y el espacio."
         />
-        <meta name="google-site-verification" content="FXLDrLf4nP7qfMs1lr1pAxpu-kU7Dpe-ynnBBkASQzE" />
         <meta
           name="keywords"
           content="NASA, Space Apps Challenge, hackathon, espacial, Atoyac de Álvarez, tecnología, innovación, ciencia, colaboración"
