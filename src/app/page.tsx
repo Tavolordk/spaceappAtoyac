@@ -18,6 +18,7 @@ const Home: NextPage = () => {
           name="description"
           content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Vive una experiencia única de innovación y colaboración para resolver desafíos relacionados con la Tierra y el espacio."
         />
+        <meta name="google-site-verification" content="FXLDrLf4nP7qfMs1lr1pAxpu-kU7Dpe-ynnBBkASQzE" />
         <meta
           name="keywords"
           content="NASA, Space Apps Challenge, hackathon, espacial, Atoyac de Álvarez, tecnología, innovación, ciencia, colaboración"
