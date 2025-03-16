@@ -2,21 +2,16 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Home: NextPage = () => {
+  import('bootstrap/dist/js/bootstrap.bundle.min.js');
   const handleRegister = (): void => {
     alert('¡Gracias por tu interés! Pronto abriremos el registro oficial.');
   };
-  const BootstrapJS = dynamic(
-    () => import('bootstrap/dist/js/bootstrap.bundle.min.js'),
-    { ssr: false }
-  );
+ 
   return (
     <>
-      <BootstrapJS />
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
