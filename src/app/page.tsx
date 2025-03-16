@@ -164,6 +164,7 @@ const Home: NextPage = () => {
             width={300}
             height={300}
             className="hero-logo img-fluid"
+            priority={true}
           />
           <h2 className="section-title">Únete al mayor hackathon espacial</h2>
           <p className="mb-4">
