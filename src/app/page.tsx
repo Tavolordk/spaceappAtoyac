@@ -1,15 +1,63 @@
 "use client";
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 
-
 const Home: NextPage = () => {
   import('bootstrap/dist/js/bootstrap.bundle.min.js');
+  
   const handleRegister = (): void => {
     alert('¡Gracias por tu interés! Pronto abriremos el registro oficial.');
   };
- 
+
+  // Estado para los datos del formulario
+  const [formData, setFormData] = useState({
+    fullname: '',
+    email: '',
+    phone: '',
+    mensaje: ''
+  });
+  
+  // Estado para el mensaje de estado (éxito o error)
+  const [status, setStatus] = useState('');
+
+  // Actualizar los datos del formulario al escribir
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Enviar el formulario sin recargar la página
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('https://formspree.io/f/mvgkgazn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus('Mensaje enviado correctamente.');
+        // Limpiar el formulario
+        setFormData({
+          fullname: '',
+          email: '',
+          phone: '',
+          mensaje: ''
+        });
+      } else {
+        setStatus('Error al enviar el mensaje.');
+      }
+    } catch (error) {
+      setStatus(`Error al enviar el mensaje: ${error instanceof Error ? error.message : ''}`);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -169,13 +217,82 @@ const Home: NextPage = () => {
       <section id="contacto" className="py-5" style={{ background: 'rgba(255,255,255,0.02)' }}>
         <div className="container text-center">
           <h3 className="section-title">Contacto</h3>
-          <p>
-            ¿Tienes dudas o quieres más información? Escríbenos a:<br />
-            <strong>spaceapps.atoyac@example.com</strong>
-          </p>
+          <p>¿Tienes dudas o quieres más información?</p>
+          
+          <div className="row justify-content-center">
+            <div className="col-md-6 text-start">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="exampleFormControlInput1" className="form-label color-primary">
+                    Nombre completo
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Escribe tu nombre"
+                    name="fullname"
+                    value={formData.fullname}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleFormControlInput2" className="form-label color-primary">
+                    Correo electrónico
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="exampleFormControlInput2"
+                    placeholder="Escribe tu correo"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleFormControlInput3" className="form-label color-primary">
+                    Teléfono
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    id="exampleFormControlInput3"
+                    placeholder="Inserta número"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleFormControlTextarea1" className="form-label color-primary">
+                    Mensaje
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows={5}
+                    name="mensaje"
+                    placeholder="Escribe tu comentario"
+                    value={formData.mensaje}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary form-submit">
+                  Enviar
+                </button>
+                {status && <p className="mt-2">{status}</p>}
+              </form>
+            </div>
+          </div>
+
           <div className="mt-3">
-            <a href="#" className="btn btn-outline-light me-2">Facebook</a>
-            <a href="#" className="btn btn-outline-light">Twitter</a>
+            <a href="" className="btn btn-outline-light me-2">Facebook</a>
+            <a href="" className="btn btn-outline-light">Instagram</a>
           </div>
         </div>
       </section>
@@ -203,29 +320,34 @@ const Home: NextPage = () => {
           color: #fff;
           overflow-x: hidden;
         }
-
+        .color-primary {
+          color: var(--color-primary);
+        }
         .hero {
           padding: 4rem 0;
           text-align: center;
           background: linear-gradient(
             to bottom,
-            rgba(0,0,0,0) 60%,
-            rgba(15,14,28,0.9) 100%
+            rgba(0, 0, 0, 0) 60%,
+            rgba(15, 14, 28, 0.9) 100%
           );
         }
-
         .hero-logo {
           max-width: 300px;
           margin-bottom: 2rem;
           animation: float 4s ease-in-out infinite;
         }
-
         @keyframes float {
-          0% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0); }
+          0% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+          100% {
+            transform: translateY(0);
+          }
         }
-
         .btn-custom {
           background: var(--color-primary);
           border: none;
@@ -238,11 +360,9 @@ const Home: NextPage = () => {
           transition: background 0.3s ease;
           border-radius: 4px;
         }
-
         .btn-custom:hover {
           background: var(--color-secondary);
         }
-
         .section-title {
           font-family: var(--font-futuristic);
           font-size: 2rem;
@@ -251,21 +371,18 @@ const Home: NextPage = () => {
           letter-spacing: 2px;
           margin-bottom: 1rem;
         }
-
         .agenda-item {
-          background: rgba(255,255,255,0.05);
+          background: rgba(255, 255, 255, 0.05);
           padding: 1.5rem;
           border-radius: 6px;
           margin-bottom: 1rem;
         }
-
         .agenda-item h4 {
           margin-bottom: 0.5rem;
           color: var(--color-primary);
         }
-
         footer {
-          background: rgba(15,14,28,0.8);
+          background: rgba(15, 14, 28, 0.8);
           padding: 1rem 0;
           text-align: center;
           font-size: 0.9rem;
