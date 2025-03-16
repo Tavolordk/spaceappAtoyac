@@ -24,7 +24,7 @@ const Home: NextPage = () => {
           content="NASA, Space Apps Challenge, hackathon, espacial, Atoyac de Álvarez, tecnología, innovación, ciencia, colaboración"
         />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://spaceapp-atoyac.vercel.app/" />
+        <link rel="canonical" href="https://www.atoyacspaceapps.org/" />
 
         {/* Open Graph Meta Tags */}
         <meta property="og:title" content="NASA Space Apps Challenge 2025 | Atoyac de Álvarez" />
@@ -32,8 +32,8 @@ const Home: NextPage = () => {
           property="og:description"
           content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Descubre desafíos innovadores y colabora con talentos globales."
         />
-        <meta property="og:image" content="https://spaceapp-atoyac.vercel.app/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
-        <meta property="og:url" content="https://spaceapp-atoyac.vercel.app/" />
+        <meta property="og:image" content="https://www.atoyacspaceapps.org/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
+        <meta property="og:url" content="https://www.atoyacspaceapps.org/" />
         <meta property="og:type" content="website" />
 
         {/* Twitter Card Meta Tags */}
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
           name="twitter:description"
           content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Descubre desafíos innovadores y colabora con talentos globales."
         />
-        <meta name="twitter:image" content="https://spaceapp-atoyac.vercel.app/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
+        <meta name="twitter:image" content="https://www.atoyacspaceapps.org/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
 
         {/* Structured Data */}
         <script
