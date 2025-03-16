@@ -292,7 +292,7 @@ const Home: NextPage = () => {
           </div>
 
           <div className="mt-3">
-            <a href="" className="btn btn-outline-light me-2">Facebook</a>
+            <a href="https://www.facebook.com/profile.php?id=61573686727475" className="btn btn-outline-light me-2">Facebook</a>
             <a href="" className="btn btn-outline-light">Instagram</a>
           </div>
         </div>
