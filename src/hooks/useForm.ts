@@ -31,7 +31,7 @@ export const useForm = (initialState: FormData) => {
       });
 
       if (res.ok) {
-        setStatus('Mensaje enviado correctamente.');
+        setStatus('¡Mensaje enviado correctamente, te contestaremos a la brevedad posible!');
         setFormData(initialState);
       } else {
         setStatus('Error al enviar el mensaje.');
