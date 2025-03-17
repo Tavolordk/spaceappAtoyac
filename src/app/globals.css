@@ -41,42 +41,42 @@ body {
   }
 }
 .btn-custom {
-  background: var(--color-primary);
-  border: none;
-  padding: 1rem 2rem;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  border-radius: 4px;
+  background: var(--color-primary) !important;
+  border: none !important;
+  padding: 1rem 2rem !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  transition: background 0.3s ease !important;
+  border-radius: 4px !important;
 }
 p { color: #fff !important; }
 .btn-custom:hover {
-  background: var(--color-secondary);
+  background: var(--color-secondary) !important;
 }
 .section-title {
-  font-family: var(--font-futuristic);
-  font-size: 2rem;
-  color: var(--color-secondary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 1rem;
+  font-family: var(--font-futuristic) !important;
+  font-size: 2rem !important;
+  color: var(--color-secondary) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  margin-bottom: 1rem !important;
 }
 .agenda-item {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 1.5rem;
-  border-radius: 6px;
-  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.05) !important;
+  padding: 1.5rem !important;
+  border-radius: 6px !important;
+  margin-bottom: 1rem !important;
 }
 .agenda-item h4 {
-  margin-bottom: 0.5rem;
-  color: var(--color-primary);
+  margin-bottom: 0.5rem !important;
+  color: var(--color-primary) !important;
 }
 footer {
-  background: rgba(15, 14, 28, 0.8);
-  padding: 1rem 0;
-  text-align: center;
-  font-size: 0.9rem;
+  background: rgba(15, 14, 28, 0.8) !important;
+  padding: 1rem 0 !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
 }

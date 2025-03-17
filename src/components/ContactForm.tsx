@@ -53,7 +53,7 @@ const ContactForm: FC = () => {
                   Teléfono
                 </label>
                 <input
-                  type="number"
+                  type="tel"
                   className="form-control"
                   id="phone"
                   placeholder="Inserta número"
