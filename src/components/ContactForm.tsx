@@ -86,8 +86,8 @@ const ContactForm: FC = () => {
           </div>
         </div>
         <div className="mt-3">
-          <a href="https://www.facebook.com/profile.php?id=61573686727475" className="btn btn-outline-light me-2">Facebook</a>
-          <a href="" className="btn btn-outline-light">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=61573686727475" className="btn btn-outline-light me-2" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://www.instagram.com/nasa.space.apps.atoyac/" className="btn btn-outline-light" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
     </section>
