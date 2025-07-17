@@ -1,35 +1,17 @@
-// app/layout.tsx
-import './globals.css';
-import { Orbitron, Poppins } from 'next/font/google';
-import type { Metadata } from 'next';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "@/app/globals.css";
+import { Poppins } from "next/font/google";
 
-export const metadata: Metadata = {
-  title: 'NASA Space Apps Challenge 2025 | Atoyac de Álvarez',
-  description: 'Hackathon internacional en Atoyac de Álvarez',
-}
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-orbitron',
-})
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '600'],
-  variable: '--font-poppins',
-})
+export const metadata = {
+  title: "NASA Space Apps Challenge",
+  description: "Official site for the 2025 NASA Space Apps Challenge in Mexico",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className={`${orbitron.variable} ${poppins.variable}`}>
-        {children}
-      </body>
+    <html lang="en">
+      <body className={`${poppins.className} bg-[#FFFCF6]`}>{children}</body>
     </html>
-  )
+  );
 }

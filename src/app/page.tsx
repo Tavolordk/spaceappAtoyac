@@ -1,30 +1,20 @@
 'use client';
-import type { NextPage } from 'next';
-import SEO from '../components/SEO';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import About from '../components/About';
-import Agenda from '../components/Agenda';
-import ContactForm from '../components/ContactForm';
-import Footer from '../components/Footer';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import AboutRegisterSection from '@/components/AboutRegisterSection';
+import FeaturesSection from '@/components/FeaturesSection';
+import SponsorsSection from '@/components/SponsorsSection';
+import Footer from '@/components/Footer';
 
-const Home: NextPage = () => {
-  import('bootstrap/dist/js/bootstrap.bundle.min.js');
-  const handleRegister = () => {
-    alert('¡Gracias por tu interés! Pronto abriremos el registro oficial.');
-  };
-
+export default function HomePage() {
   return (
     <>
-      <SEO />
       <Navbar />
-      <Hero onRegister={handleRegister} />
-      <About />
-      <Agenda />
-      <ContactForm />
+      <Hero />
+      <AboutRegisterSection />
+      <FeaturesSection />
+      <SponsorsSection />
       <Footer />
     </>
   );
-};
-
-export default Home;
+}
