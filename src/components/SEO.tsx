@@ -23,7 +23,7 @@ const SEO = () => {
         property="og:description"
         content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Descubre desafíos innovadores y colabora con talentos globales."
       />
-      <meta property="og:image" content="https://www.atoyacspaceapps.org/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
+      <meta property="og:image" content="https://www.atoyacspaceapps.org/logo-removebg-preview.png" />
       <meta property="og:url" content="https://www.atoyacspaceapps.org/" />
       <meta property="og:type" content="website" />
       {/* Twitter Card Meta Tags */}
@@ -33,7 +33,7 @@ const SEO = () => {
         name="twitter:description"
         content="Únete al hackathon espacial más grande del mundo en Atoyac de Álvarez. Descubre desafíos innovadores y colabora con talentos globales."
       />
-      <meta name="twitter:image" content="https://www.atoyacspaceapps.org/NASA_Space_Apps_Challenge_2025_Atoyac_logo.png" />
+      <meta name="twitter:image" content="https://www.atoyacspaceapps.org/logo-removebg-preview.png" />
       {/* Structured Data */}
       <script
         type="application/ld+json"

@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
 
 const Hero = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -55,11 +57,13 @@ const Hero = () => {
         </div>
       </div>
       <div className="md:w-2/5 flex justify-center mb-8 md:mb-0">
-        <img
-          src="https://placehold.co/320x260/CCE3D9/FFF?text=Woman+on+beach+watching+rocket+launch"
-          alt="Illustration of woman on beach watching rocket"
-          className="rounded-[80px] w-[320px] h-[260px] object-cover"
-        />
+<Image
+  src="/hero.png"
+  alt="Promotional NASA Space Apps Challenge Atoyac 2025"
+  width={320}
+  height={240}
+  className="rounded-[20px] w-[320px] h-auto object-cover"
+/>
       </div>
     </div>
   );
