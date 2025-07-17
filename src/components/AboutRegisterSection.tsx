@@ -8,7 +8,7 @@ const AboutRegisterSection = () => {
             <h2 className="text-3xl font-bold text-[#3B2B22] mb-4">About the Challenge</h2>
             <p className="text-[#3B2B22] mb-4">
               NASA Space Apps Challenge is an international hackathon for coders, scientists, designers, storytellers,
-              makers, builders, technologists, and others where teams engage with NASA's open data to address real-world
+              makers, builders, technologists, and others where teams engage with NASA&apos;s open data to address real-world
               problems on Earth and in space.
             </p>
             <p className="text-[#3B2B22]">
