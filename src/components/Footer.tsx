@@ -38,7 +38,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="mt-8 text-center text-sm">
-          <p>&copy; 2025 NASA Space Apps Challenge. Todos los derechos reservados.</p>
+          <p>&copy; 2025 NASA Space Apps Challenge Guerrero. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
