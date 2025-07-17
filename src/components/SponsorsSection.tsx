@@ -9,9 +9,9 @@ const SponsorsSection = () => {
   ];
 
   return (
-    <div className="py-16 bg-[#E2F1ED]" id="sponsors">
+    <div className="py-16 bg-[#EDE0D4]" id="sponsors">
       <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-[#3B2B22] mb-12">Our Sponsors</h2>
+        <h2 className="text-3xl font-bold text-center text-[#1D3557] mb-12">Nuestros Patrocinadores</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {sponsors.map((sponsor, index) => (
             <div key={index} className="flex items-center justify-center">
@@ -23,4 +23,5 @@ const SponsorsSection = () => {
     </div>
   );
 };
+
 export default SponsorsSection;
