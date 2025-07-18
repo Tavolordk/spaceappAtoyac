@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useRecaptcha } from '@/hooks/useRecaptcha';
 declare global {
   interface Window {
@@ -21,14 +21,6 @@ const AboutRegisterSection = () => {
     rol: ''
   });
 
-  // Cargar el script de reCAPTCHA una vez al montar
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://www.google.com/recaptcha/api.js";
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
