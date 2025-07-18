@@ -19,7 +19,7 @@ const AboutRegisterSection = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('http://localhost:3000/api/registro', {
+      const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
