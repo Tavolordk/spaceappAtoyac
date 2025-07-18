@@ -38,7 +38,7 @@ const Hero = () => {
     <div className="flex flex-col-reverse md:flex-row items-center justify-center mt-12 px-4 max-w-5xl mx-auto">
       <div className="md:w-3/5 text-left flex flex-col items-start">
         <h1 className="text-4xl md:text-5xl font-bold text-[#1D3557] mb-4 leading-tight">
-          NASA SPACE APPS<br />CHALLENGE 2025
+          NASA SPACE APPS<br />CHALLENGE GUERRERO 2025
         </h1>
         <p className="text-xl text-[#7F4F24] mb-6">Comienzo de registros el 17 de Julio 2025</p>
         <button
