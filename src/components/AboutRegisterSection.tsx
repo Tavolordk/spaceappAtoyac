@@ -1,4 +1,55 @@
+import { useState } from 'react';
+
 const AboutRegisterSection = () => {
+  const [form, setForm] = useState({
+    nombre: '',
+    lugar: '',
+    email: '',
+    edad: '',
+    rol: '',
+    institucion: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const body = {
+      nombre: form.nombre,
+      correo: form.email,
+      institucion: form.institucion,
+      telefono: form.lugar // Se está usando "lugar" como teléfono por ahora
+    };
+
+    try {
+      const res = await fetch('http://localhost:3000/api/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        alert('✅ Registro exitoso');
+        setForm({
+          nombre: '',
+          lugar: '',
+          email: '',
+          edad: '',
+          rol: '',
+          institucion: ''
+        });
+      } else {
+        alert('❌ Ocurrió un error al registrar');
+      }
+    } catch (error) {
+      console.error('Error al enviar:', error);
+      alert('❌ No se pudo conectar con el servidor');
+    }
+  };
+
   return (
     <div className="bg-[#EDE0D4] py-16 mt-16" id="about">
       <div className="max-w-5xl mx-auto px-4">
@@ -14,22 +65,66 @@ const AboutRegisterSection = () => {
           </div>
           <div className="md:w-1/2 md:pl-8 w-full" id="register">
             <h2 className="text-3xl font-bold text-[#1D3557] mb-4">Regístrate Ahora</h2>
-            <form className="space-y-4">
-              <input type="text" placeholder="Nombre Completo" className="w-full p-2 rounded-md border border-[#7F4F24]" name="nombre" />
-              <input type="text" placeholder="Lugar de origen" className="w-full p-2 rounded-md border border-[#7F4F24]" name="lugar" />
-              <input type="email" placeholder="Correo Electrónico" className="w-full p-2 rounded-md border border-[#7F4F24]" name="email" />
-              <input type="number" placeholder="Edad" className="w-full p-2 rounded-md border border-[#7F4F24]" name="edad" />
-              <select className="w-full p-2 rounded-md border border-[#7F4F24]" name="rol">
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Nombre Completo"
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="nombre"
+                value={form.nombre}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Lugar de origen"
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="lugar"
+                value={form.lugar}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Correo Electrónico"
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="number"
+                placeholder="Edad"
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="edad"
+                value={form.edad}
+                onChange={handleChange}
+                required
+              />
+              <select
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="rol"
+                value={form.rol}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Selecciona tu rol</option>
                 <option value="profesionista">Profesionista</option>
                 <option value="estudiante">Estudiante</option>
                 <option value="otro">Otro</option>
               </select>
-              <select className="w-full p-2 rounded-md border border-[#7F4F24]" name="rol">
+              <select
+                className="w-full p-2 rounded-md border border-[#7F4F24]"
+                name="institucion"
+                value={form.institucion}
+                onChange={handleChange}
+                required
+              >
                 <option value="">Selecciona tu institución</option>
                 <option value="uagro23">UAGRO PREPA 23</option>
                 <option value="uagro22">UAGRO PREPA 22</option>
-                <option value="uagro22">CBTIS 23</option>
+                <option value="cbtis23">CBTIS 23</option>
                 <option value="other">Otro</option>
               </select>
               <button

@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: "configuracion.env" });
+console.log("🌐 URI de conexión:", process.env.MONGO_URI);
 
 export const conectarDB = async () => {
   try {

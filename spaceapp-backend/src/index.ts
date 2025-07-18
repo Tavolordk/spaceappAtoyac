@@ -5,6 +5,7 @@ import { conectarDB } from "./config/db";
 import registroRoutes from "./routes/registro.routes";
 
 dotenv.config();
+console.log("🌐 URI de conexión:", process.env.MONGO_URI);
 
 const app = express();
 app.use(cors());
