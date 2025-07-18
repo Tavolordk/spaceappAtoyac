@@ -1,4 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 
 const AboutRegisterSection = () => {
   const [form, setForm] = useState({
@@ -11,41 +21,45 @@ const AboutRegisterSection = () => {
     rol: ''
   });
 
+  // Cargar el script de reCAPTCHA una vez al montar
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "https://www.google.com/recaptcha/api.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
+  try {
+    const token = await window.grecaptcha.execute("6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", { action: "submit" });
 
-      const data = await res.json();
-      if (res.ok) {
-        alert('✅ Registro enviado');
-        setForm({
-          nombre: '',
-          correo: '',
-          telefono: '',
-          lugar: '',
-          institucion: '',
-          edad: '',
-          rol: ''
-        });
-      } else {
-        alert('❌ Error al registrar');
-        console.error(data);
-      }
-    } catch (error) {
-      alert('❌ Error de conexión con el servidor');
-      console.error(error);
+    const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...form, token })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('✅ Registro enviado');
+      setForm({ nombre: '', correo: '', telefono: '', lugar: '', institucion: '', edad: '', rol: '' });
+    } else {
+      alert('❌ Error al registrar');
+      console.error(data);
     }
-  };
+  } catch (error) {
+    alert('❌ Error de conexión con el servidor');
+    console.error(error);
+  }
+};
+
 
   return (
     <div className="bg-[#EDE0D4] py-16 mt-16" id="about">
@@ -81,7 +95,9 @@ const AboutRegisterSection = () => {
                 <option value="cbtis23">CBTIS 23</option>
                 <option value="otro">Otro</option>
               </select>
+
               <div className="g-recaptcha" data-sitekey="6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP"></div>
+
               <button type="submit" className="w-full bg-[#2A9D8F] text-white font-semibold py-2 px-4 rounded-md hover:bg-[#21867B] transition duration-300">
                 Enviar Registro
               </button>
