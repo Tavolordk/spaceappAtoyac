@@ -30,8 +30,12 @@ export const enviarCorreo = async (registro: IRegistro) => {
             <td style="padding: 8px;">${registro.correo}</td>
           </tr>
           <tr>
-            <td style="padding: 8px; font-weight: bold;">📍 Lugar de origen:</td>
+            <td style="padding: 8px; font-weight: bold;">🔢 Teléfono:</td>
             <td style="padding: 8px;">${registro.telefono}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; font-weight: bold;">📍 Lugar de origen:</td>
+            <td style="padding: 8px;">${registro.lugar}</td>
           </tr>
           <tr>
             <td style="padding: 8px; font-weight: bold;">🎓 Institución:</td>
