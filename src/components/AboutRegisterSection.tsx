@@ -36,7 +36,7 @@ const AboutRegisterSection = () => {
 const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
 // Hook para cargar y ejecutar reCAPTCHA
-useRecaptcha("6Lda_lcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", token => setCaptchaToken(token));
+useRecaptcha("6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", token => setCaptchaToken(token));
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
