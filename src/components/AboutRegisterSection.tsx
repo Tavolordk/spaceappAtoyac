@@ -105,8 +105,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <option value="otro">Otro</option>
               </select>
 
-              <div className="g-recaptcha" data-sitekey="6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP"></div>
-
               <button type="submit" className="w-full bg-[#2A9D8F] text-white font-semibold py-2 px-4 rounded-md hover:bg-[#21867B] transition duration-300">
                 Enviar Registro
               </button>
