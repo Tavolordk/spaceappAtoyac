@@ -40,23 +40,26 @@ useRecaptcha("6Lda_lcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", token => setCaptchaToke
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
+
   if (!captchaToken) {
     alert("❌ No se validó el reCAPTCHA");
     return;
   }
-  try {
-    const token = await window.grecaptcha.execute("6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", { action: "submit" });
 
+  try {
     const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, token })
+      body: JSON.stringify({ ...form, captchaToken })
     });
 
     const data = await res.json();
     if (res.ok) {
       alert('✅ Registro enviado');
-      setForm({ nombre: '', correo: '', telefono: '', lugar: '', institucion: '', edad: '', rol: '' });
+      setForm({
+        nombre: '', correo: '', telefono: '', lugar: '',
+        institucion: '', edad: '', rol: ''
+      });
     } else {
       alert('❌ Error al registrar');
       console.error(data);
@@ -66,7 +69,6 @@ const handleSubmit = async (e: React.FormEvent) => {
     console.error(error);
   }
 };
-
 
   return (
     <div className="bg-[#EDE0D4] py-16 mt-16" id="about">
