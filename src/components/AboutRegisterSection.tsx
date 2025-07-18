@@ -3,11 +3,12 @@ import { useState } from 'react';
 const AboutRegisterSection = () => {
   const [form, setForm] = useState({
     nombre: '',
+    correo: '',
+    telefono: '',
     lugar: '',
-    email: '',
+    institucion: '',
     edad: '',
-    rol: '',
-    institucion: ''
+    rol: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -17,36 +18,32 @@ const AboutRegisterSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const body = {
-      nombre: form.nombre,
-      correo: form.email,
-      institucion: form.institucion,
-      telefono: form.lugar // Se está usando "lugar" como teléfono por ahora
-    };
-
     try {
       const res = await fetch('http://localhost:3000/api/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify(form)
       });
 
+      const data = await res.json();
       if (res.ok) {
-        alert('✅ Registro exitoso');
+        alert('✅ Registro enviado');
         setForm({
           nombre: '',
+          correo: '',
+          telefono: '',
           lugar: '',
-          email: '',
+          institucion: '',
           edad: '',
-          rol: '',
-          institucion: ''
+          rol: ''
         });
       } else {
-        alert('❌ Ocurrió un error al registrar');
+        alert('❌ Error al registrar');
+        console.error(data);
       }
     } catch (error) {
-      console.error('Error al enviar:', error);
-      alert('❌ No se pudo conectar con el servidor');
+      alert('❌ Error de conexión con el servidor');
+      console.error(error);
     }
   };
 
@@ -66,71 +63,25 @@ const AboutRegisterSection = () => {
           <div className="md:w-1/2 md:pl-8 w-full" id="register">
             <h2 className="text-3xl font-bold text-[#1D3557] mb-4">Regístrate Ahora</h2>
             <form className="space-y-4" onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Nombre Completo"
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="nombre"
-                value={form.nombre}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Lugar de origen"
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="lugar"
-                value={form.lugar}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="email"
-                placeholder="Correo Electrónico"
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="number"
-                placeholder="Edad"
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="edad"
-                value={form.edad}
-                onChange={handleChange}
-                required
-              />
-              <select
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="rol"
-                value={form.rol}
-                onChange={handleChange}
-                required
-              >
+              <input type="text" name="nombre" placeholder="Nombre Completo" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.nombre} onChange={handleChange} required />
+              <input type="email" name="correo" placeholder="Correo Electrónico" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.correo} onChange={handleChange} required />
+              <input type="number" name="telefono" placeholder="Teléfono" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.telefono} onChange={handleChange} required />
+              <input type="text" name="lugar" placeholder="Lugar de Origen" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.lugar} onChange={handleChange} required />
+              <input type="number" name="edad" placeholder="Edad" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.edad} onChange={handleChange} required />
+              <select name="rol" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.rol} onChange={handleChange} required>
                 <option value="">Selecciona tu rol</option>
                 <option value="profesionista">Profesionista</option>
                 <option value="estudiante">Estudiante</option>
                 <option value="otro">Otro</option>
               </select>
-              <select
-                className="w-full p-2 rounded-md border border-[#7F4F24]"
-                name="institucion"
-                value={form.institucion}
-                onChange={handleChange}
-                required
-              >
+              <select name="institucion" className="w-full p-2 rounded-md border border-[#7F4F24]" value={form.institucion} onChange={handleChange} required>
                 <option value="">Selecciona tu institución</option>
                 <option value="uagro23">UAGRO PREPA 23</option>
                 <option value="uagro22">UAGRO PREPA 22</option>
                 <option value="cbtis23">CBTIS 23</option>
-                <option value="other">Otro</option>
+                <option value="otro">Otro</option>
               </select>
-              <button
-                type="submit"
-                className="w-full bg-[#2A9D8F] text-white font-semibold py-2 px-4 rounded-md hover:bg-[#21867B] transition duration-300"
-              >
+              <button type="submit" className="w-full bg-[#2A9D8F] text-white font-semibold py-2 px-4 rounded-md hover:bg-[#21867B] transition duration-300">
                 Enviar Registro
               </button>
             </form>
