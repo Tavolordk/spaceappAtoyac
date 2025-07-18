@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { useRecaptcha } from '@/hooks/useRecaptcha';
 declare global {
   interface Window {
     grecaptcha: {
@@ -33,10 +33,17 @@ const AboutRegisterSection = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+// Hook para cargar y ejecutar reCAPTCHA
+useRecaptcha("6Lda_lcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", token => setCaptchaToken(token));
 
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-
+  if (!captchaToken) {
+    alert("❌ No se validó el reCAPTCHA");
+    return;
+  }
   try {
     const token = await window.grecaptcha.execute("6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", { action: "submit" });
 
