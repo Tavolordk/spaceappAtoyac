@@ -1,14 +1,6 @@
-import {  useState } from 'react';
-import { useRecaptcha } from '@/hooks/useRecaptcha';
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (cb: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
-
+'use client';
+import { useState } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const AboutRegisterSection = () => {
   const [form, setForm] = useState({
@@ -21,46 +13,45 @@ const AboutRegisterSection = () => {
     rol: ''
   });
 
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-// Hook para cargar y ejecutar reCAPTCHA
-useRecaptcha("6Lda_IcrAAAAAMsdSY6DfMXEwH5eTD9nzn_OM6EP", token => setCaptchaToken(token));
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  if (!captchaToken) {
-    alert("❌ No se validó el reCAPTCHA");
-    return;
-  }
-
-  try {
-    const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({ ...form, captcha: captchaToken })
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      alert('✅ Registro enviado');
-      setForm({
-        nombre: '', correo: '', telefono: '', lugar: '',
-        institucion: '', edad: '', rol: ''
-      });
-    } else {
-      alert('❌ Error al registrar');
-      console.error(data);
+    if (!executeRecaptcha) {
+      alert("❌ No se cargó correctamente el reCAPTCHA");
+      return;
     }
-  } catch (error) {
-    alert('❌ Error de conexión con el servidor');
-    console.error(error);
-  }
-};
+
+    try {
+      const token = await executeRecaptcha("registro_form");
+
+      const res = await fetch('https://spaceapp-backend-production-a1fe.up.railway.app/api/registro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, captcha: token })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('✅ Registro enviado');
+        setForm({
+          nombre: '', correo: '', telefono: '', lugar: '',
+          institucion: '', edad: '', rol: ''
+        });
+      } else {
+        alert('❌ Error al registrar');
+        console.error(data);
+      }
+    } catch (error) {
+      alert('❌ Error de conexión con el servidor');
+      console.error(error);
+    }
+  };
 
   return (
     <div className="bg-[#EDE0D4] py-16 mt-16" id="about">
