@@ -272,13 +272,6 @@ const Convocatoria = ()=> {
           </a>
         </section>
       </div>
-
-      {/* Footer (local para esta página) */}
-      <footer className="mt-6 bg-[#152b55] py-6 text-white">
-        <div className="mx-auto max-w-6xl px-4 text-sm">
-          © 2025 NASA Space Apps Challenge — Evento Local Guerrero. Paleta azul #152b55 con acentos #c82333.
-        </div>
-      </footer>
     </main>
   );
 }
