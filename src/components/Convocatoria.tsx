@@ -232,7 +232,7 @@ const Convocatoria = ()=> {
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <p className="text-sm">
                 <strong>Sitio oficial:</strong><br />
-                <a className="underline" href="https://www.spaceappschallenge.org/2025/local-events/atoyac-de-alvarez/" target="_blank" rel="noreferrer">
+                <a className="underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">
                   spaceappschallenge.org/2025/local-events/guerrero
                 </a>
               </p>
