@@ -100,9 +100,12 @@ const Convocatoria = ()=> {
                 <li>
                   <strong>Categoría Profesional:</strong> Público en general, egresados y profesionales (mayores de 16 años).
                 </li>
+                <li>
+                  <strong>Categoría Mixta:</strong> Público en general, de educación básica y menores de 16 años.
+                </li>
               </ul>
               <p className="mt-3 text-sm leading-relaxed">
-                <em>Integración de equipos:</em> de 1 a 6 integrantes. Menores de 18 años deberán presentar autorización firmada por madre/padre o tutor legal antes del evento.
+                <em>Integración de equipos:</em> de 1 a 6 integrantes pueden ser multidisciplinarios de distintos campos y especialidad. Menores de 18 años deberán presentar autorización firmada por madre/padre o tutor legal antes del evento.
               </p>
             </div>
           </div>
@@ -114,7 +117,7 @@ const Convocatoria = ()=> {
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Asistencia de externos:</strong> Invitados especiales, concursantes y jueces que no residan en San Jerónimo de Juárez podrán asistir solo el <strong>5 de octubre (09:00–14:00)</strong> por capacidad limitada de hospedaje.
+                  <strong>Asistencia de externos:</strong> Invitados especiales, concursantes y jueces que no residan en San Jerónimo de Juárez podrán asistir solo el <strong>5 de octubre (09:00–14:00)</strong> por capacidad limitada de hospedaje o si lo prefieren pueden participar de forma online los dos días siempre y cuando se registren en la localidad de Guerrero y envíen sus proyectos cuando se les indique de lo contrario no podrán tener constancia de participación.
                 </li>
                 <li><strong>Desarrollo de proyectos:</strong> durante el hackathon, 4 y 5 de octubre de 2025.</li>
                 <li>
@@ -127,7 +130,7 @@ const Convocatoria = ()=> {
                 <li><strong>Originalidad:</strong> proyectos originales; se permite reutilizar material preexistente hasta en un 20% con citación adecuada.</li>
                 <li><strong>Idioma:</strong> español o inglés.</li>
                 <li>
-                  <strong>Entrega final:</strong> repositorio público (GitHub/GitLab/otro) y PDF (máx. 5 páginas, Arial 11, márgenes 2.5 cm) con portada, resumen, metodología, resultados y conclusiones.
+                  <strong>Entrega final:</strong> repositorio público (GitHub/GitLab/otro) y PDF (máx. 5 páginas, Arial 11, márgenes 2.5 cm) con portada, resumen, metodología, resultados y conclusiones. Es importante entregar el proyecto aunque no se sean ganadores para que puedan obtener su constancia de participación dada por la NASA.
                 </li>
               </ul>
             </div>
@@ -251,7 +254,7 @@ const Convocatoria = ()=> {
                 <a className="underline" href="mailto:spaceapps.uagro@uagu.ro.mx">spaceapps.uagro@uagu.ro.mx</a>
               </p>
               <p className="mt-2 text-sm">
-                <strong>Teléfonos:</strong> <a className="underline" href="tel:+527473219876">(781)XXXXXXXX</a> · {" "}
+                <strong>Teléfonos:</strong> <a className="underline" href="tel:+527473219876">(781) 103 6342</a> · {" "}
                 <a className="underline" href="tel:+529602445317">(960) 244 5317</a>
               </p>
               <p className="mt-3 text-xs text-gray-600">
