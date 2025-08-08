@@ -220,7 +220,7 @@ const Convocatoria = ()=> {
             <ul className="list-disc pl-5 space-y-2">
               <li>Certificado de participación para todos los equipos.</li>
               <li>Trofeos y reconocimientos oficiales de NASA para los 3 mejores proyectos de cada temática.</li>
-              <li>Mentorías personalizadas con especialistas de NASA, AEM y ATEX IT SOLUTIONS.</li>
+              <li>Mentorías personalizadas con especialistas sobre cursos de tecnología.</li>
             </ul>
           </div>
         </section>
