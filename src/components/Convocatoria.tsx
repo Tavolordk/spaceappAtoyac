@@ -192,7 +192,7 @@ const Convocatoria = ()=> {
             </ul>
             <p className="mt-3 rounded-lg border-l-8 border-[#c82333] bg-[#fff3f4] p-3 text-sm">
               También puedes consultar el evento de Guerrero aquí:
-              <a className="ml-1 font-semibold underline" href="https://spaceappschallenge.org/2025/local-events/guerrero" target="_blank" rel="noreferrer">spaceappschallenge.org/2025/local-events/guerrero</a>.
+              <a className="ml-1 font-semibold underline" href="https://www.spaceappschallenge.org/2025/local-events/atoyac-de-alvarez/" target="_blank" rel="noreferrer">spaceappschallenge.org/2025/local-events/guerrero</a>.
             </p>
           </div>
         </section>
