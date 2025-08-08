@@ -251,7 +251,7 @@ const Convocatoria = ()=> {
                 <a className="underline" href="mailto:spaceapps.uagro@uagu.ro.mx">spaceapps.uagro@uagu.ro.mx</a>
               </p>
               <p className="mt-2 text-sm">
-                <strong>Teléfonos:</strong> <a className="underline" href="tel:+527473219876">(747) 321 9876</a> · {" "}
+                <strong>Teléfonos:</strong> <a className="underline" href="tel:+527473219876">(781)XXXXXXXX</a> · {" "}
                 <a className="underline" href="tel:+529602445317">(960) 244 5317</a>
               </p>
               <p className="mt-3 text-xs text-gray-600">
