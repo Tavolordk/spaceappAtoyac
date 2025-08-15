@@ -1,23 +1,20 @@
 // File: app/convocatoria/page.tsx
-// Next.js (App Router) page — responsive, Tailwind-based, palette per UAGro banner
-// Drop this into your Next.js 13/14/15 project using the app/ directory.
-
 import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Convocatoria — NASA Space Apps Challenge 2025 Guerrero",
   description:
-    "Convocatoria oficial del NASA Space Apps Challenge 2025 Guerrero — Preparatoria No. 23 Jacobo Nájera Hernández, San Jerónimo de Juárez.",
+    "Convocatoria oficial del NASA Space Apps Challenge 2025 Guerrero — Preparatoria No. 23 “Prof. Jacob Nájera Hernández”, San Jerónimo de Juárez.",
   openGraph: {
     title: "Convocatoria — NASA Space Apps Challenge 2025 Guerrero",
     description:
-      "Detalles de participación, bases, temáticas, etapas, evaluación, premios y contacto.",
+      "Bases, participantes, normativa, ejes temáticos, etapas, evaluación, premios e informes del evento local en Guerrero.",
     type: "website",
   },
 };
 
-const Convocatoria = ()=> {
+const Convocatoria = () => {
   return (
     <main className="min-h-screen bg-white text-[#0a0a0a]">
       {/* Hero */}
@@ -26,42 +23,36 @@ const Convocatoria = ()=> {
           <span className="inline-block rounded-full bg-[#c82333] px-3 py-1 text-xs font-semibold tracking-wide">
             Convocatoria
           </span>
+
           <h1 className="mt-3 text-2xl sm:text-4xl font-semibold leading-tight">
-                <Image
-      src="https://guerrero.quadratin.com.mx/www/wp-content/uploads/2024/05/uagro-1-1160x700.jpg" // ruta relativa a public
-      alt="Descripción de la imagen"
-      width={800}
-      height={600}
-      className="rounded-lg shadow-md"
-    />
             NASA Space Apps Challenge 2025 — Guerrero
           </h1>
+
           <p className="mt-1 text-sm sm:text-base opacity-90">
-            Preparatoria No. 23 “Jacobo Nájera Hernández”, San Jerónimo de Juárez · 4 y 5 de octubre de 2025
+            Preparatoria No. 23 “Prof. Jacob Nájera Hernández”, San Jerónimo de Juárez · 4 y 5 de octubre de 2025
           </p>
+
+          <div className="mt-6">
+            <Image
+              src="https://guerrero.quadratin.com.mx/www/wp-content/uploads/2024/05/uagro-1-1160x700.jpg"
+              alt="Universidad Autónoma de Guerrero"
+              width={800}
+              height={460}
+              className="rounded-lg shadow-md"
+            />
+          </div>
+
           <div className="mt-6 flex flex-wrap gap-2 text-sm">
-            <a
-              href="#bases"
-              className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15"
-            >
+            <a href="#bases" className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15">
               Bases
             </a>
-            <a
-              href="#tematicas"
-              className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15"
-            >
+            <a href="#tematicas" className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15">
               Temáticas
             </a>
-            <a
-              href="#etapas"
-              className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15"
-            >
+            <a href="#etapas" className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15">
               Etapas
             </a>
-            <a
-              href="#contacto"
-              className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15"
-            >
+            <a href="#contacto" className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/15">
               Contacto
             </a>
           </div>
@@ -73,74 +64,133 @@ const Convocatoria = ()=> {
         <section id="convocan" className="py-8 sm:py-10">
           <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
             <p className="leading-relaxed">
-              NASA, a través de su Desafío Internacional Space Apps, junto con la Universidad Autónoma de Guerrero (UAGro), la Preparatoria No. 23 “Jacobo Nájera Hernández” de San Jerónimo de Juárez, la Secretaría de Educación del Estado de Guerrero, el H. Ayuntamiento de San Jerónimo de Juárez y ATEX IT SOLUTIONS, empresa de tecnología, <strong>convocan</strong> a estudiantes de la UAGro (medio superior, superior y posgrado), alumnos de la Preparatoria No. 23 y al público en general (mayores de 16 años) a formar equipos y participar en el <strong>NASA Space Apps Challenge 2025 Guerrero</strong>.
-            </p>
-            <p className="mt-3 leading-relaxed">
-              La sede será la Preparatoria No. 23 “Jacobo Nájera Hernández”, ubicada en Calle Niños Héroes S/N, Col. Centro, San Jerónimo de Juárez, Guerrero. El evento se realizará los días <strong>4 y 5 de octubre de 2025</strong>.
+              La NASA (Administración Nacional de Aeronáutica y del Espacio), a través de su Desafío Internacional Space
+              Apps, en colaboración con la Universidad Autónoma de Guerrero (UAGro) y la empresa de tecnologías ATEX IT
+              SOLUTIONS, <strong>convocan a</strong> estudiantes, profesionistas y público en general a participar en el{" "}
+              <strong>NASA Space Apps Challenge 2025 Guerrero</strong>, una experiencia global de innovación y creatividad
+              científica.
             </p>
           </div>
         </section>
 
-        {/* Bases */}
+        {/* Objetivo */}
+        <section id="objetivo" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">OBJETIVO</h2>
+          <div className="mt-6 rounded-2xl border border-gray-200 p-5 shadow-sm">
+            <p className="leading-relaxed">
+              Impulsar el desarrollo de habilidades en ciencia, tecnología, ingeniería y matemáticas (STEM) entre
+              estudiantes de la UAGro y público en general mayor de 16 años, mediante su participación activa en el NASA
+              Space Apps Challenge 2025 en Guerrero, promoviendo la innovación colaborativa, el uso creativo de datos
+              espaciales y el fortalecimiento de competencias técnicas y de resolución de problemas.
+            </p>
+          </div>
+        </section>
+
+        {/* Lugar y fechas */}
+        <section id="lugar-fechas" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">LUGAR Y FECHAS</h2>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
+              <ul className="space-y-2 text-sm">
+                <li>🏫 <strong>Escuela Preparatoria No. 23</strong></li>
+                <li>📍 San Jerónimo de Juárez, Guerrero</li>
+                <li>🗓️ <strong>4 y 5 de octubre de 2025</strong></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* BASES */}
         <section id="bases" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
           <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">BASES</h2>
 
+          {/* 1. Participantes */}
           <div className="mt-6 grid gap-4 sm:grid-cols-[1fr,2fr]">
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <h3 className="text-lg font-semibold text-[#152b55]">1. Participantes</h3>
             </div>
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
+              <p className="mb-3">
+                Podrán inscribirse personas mayores de 16 años, organizadas de manera individual o en equipos de 6
+                integrantes, en las siguientes categorías:
+              </p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Categoría Estudiantil Media Superior:</strong> Alumnos de todos los niveles del medio superior (16–19 años).
+                  <strong>Categoría Educación Media Superior:</strong> Estudiantes de todos los subsistemas educativos.
                 </li>
                 <li>
-                  <strong>Categoría Estudiantil Superior:</strong> Estudiantes de la UAGro u otra institución universitaria del estado (todas las carreras, todos los niveles).
+                  <strong>Categoría Educación Superior:</strong> Estudiantes universitarios de la UAGro y otras
+                  instituciones.
                 </li>
                 <li>
-                  <strong>Categoría Profesional:</strong> Público en general, egresados y profesionales (mayores de 16 años).
-                </li>
-                <li>
-                  <strong>Categoría Mixta:</strong> Público en general, de educación básica y menores de 16 años.
+                  <strong>Categoría Profesional:</strong> Público general, egresados y profesionales del área tecnológica
+                  o afines.
                 </li>
               </ul>
               <p className="mt-3 text-sm leading-relaxed">
-                <em>Integración de equipos:</em> de 1 a 6 integrantes pueden ser multidisciplinarios de distintos campos y especialidad. Menores de 18 años deberán presentar autorización firmada por madre/padre o tutor legal antes del evento.
+                <strong>Nota:</strong> Menores de 16 años podrán participar únicamente bajo la supervisión de su madre,
+                padre o tutor legal, quien deberá estar presente durante el evento y asumir la responsabilidad
+                correspondiente. En el caso de menores de 18 años, será obligatoria la entrega de una carta de autorización
+                firmada por el tutor legal.
               </p>
             </div>
           </div>
 
+          {/* 2. Normativa general */}
           <div className="mt-4 grid gap-4 sm:grid-cols-[1fr,2fr]">
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
-              <h3 className="text-lg font-semibold text-[#152b55]">2. Normativa General</h3>
+              <h3 className="text-lg font-semibold text-[#152b55]">2. Normativa general</h3>
             </div>
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Asistencia de externos:</strong> Invitados especiales, concursantes y jueces que no residan en San Jerónimo de Juárez podrán asistir solo el <strong>5 de octubre (09:00–14:00)</strong> por capacidad limitada de hospedaje o si lo prefieren pueden participar de forma online los dos días siempre y cuando se registren en la localidad de Guerrero y envíen sus proyectos cuando se les indique de lo contrario no podrán tener constancia de participación.
-                </li>
-                <li><strong>Desarrollo de proyectos:</strong> durante el hackathon, 4 y 5 de octubre de 2025.</li>
-                <li>
-                  <strong>Desafíos:</strong> se deberá abordar al menos uno de los desafíos oficiales de
-                  <a className="ml-1 underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">NASA Space Apps 2025</a>.
+                  Se aceptará la participación <strong>presencial o virtual</strong> de personas que residan en San
+                  Jerónimo de Juárez.
                 </li>
                 <li>
-                  <strong>Formatos aceptados:</strong> software, hardware, visualizaciones de datos, modelos físicos, narrativas interactivas, o cualquier formato creativo con datos abiertos de la NASA.
+                  Los proyectos deberán desarrollarse durante el hackathon (<strong>4 y 5 de octubre</strong>) y responder
+                  al menos uno de los desafíos oficiales publicados por la NASA.
                 </li>
-                <li><strong>Originalidad:</strong> proyectos originales; se permite reutilizar material preexistente hasta en un 20% con citación adecuada.</li>
-                <li><strong>Idioma:</strong> español o inglés.</li>
                 <li>
-                  <strong>Entrega final:</strong> repositorio público (GitHub/GitLab/otro) y PDF (máx. 5 páginas, Arial 11, márgenes 2.5 cm) con portada, resumen, metodología, resultados y conclusiones. Es importante entregar el proyecto aunque no se sean ganadores para que puedan obtener su constancia de participación dada por la NASA.
+                  Se aceptan prototipos en diversas formas: software, hardware, modelos físicos, narrativas interactivas,
+                  visualizaciones, entre otros, siempre que utilicen <strong>datos abiertos de la NASA</strong>.
                 </li>
+                <li>
+                  El proyecto debe ser original. Si incluye material preexistente, deberá indicarse el porcentaje estimado
+                  y consultarlo con jueces o asesores.
+                </li>
+                <li>
+                  Es obligatorio declarar el uso de <strong>Inteligencia Artificial</strong> (porcentaje y tipo). El uso de
+                  IA no será penalizado, pero su omisión puede afectar la evaluación.
+                </li>
+                <li>
+                  Las referencias deberán citarse en formato <strong>APA</strong>:{" "}
+                  <a className="underline" href="https://normas-apa.org" target="_blank" rel="noreferrer">
+                    normas-apa.org
+                  </a>
+                  .
+                </li>
+                <li>Idioma aceptado: español o inglés.</li>
               </ul>
+
+              <div className="mt-4 rounded-lg border-l-8 border-[#c82333] bg-[#fff3f4] p-3">
+                <p className="font-semibold">Entrega final:</p>
+                <ul className="list-disc pl-5 text-sm space-y-1">
+                  <li>Enlace a repositorio público del proyecto.</li>
+                  <li>Documento PDF (máx. 5 páginas) con descripción del proyecto.</li>
+                  <li>
+                    Los finalistas podrán recibir asesoría adicional para reforzar su propuesta de cara a la etapa global.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Temáticas */}
+        {/* 3. Temáticas */}
         <section id="tematicas" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
           <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">
-            3. Temáticas <span className="text-sm font-normal text-gray-600">(Lema: Learn, Launch, Lead)</span>
+            3. Ejes temáticos <span className="text-sm font-normal text-gray-600">(Lema: Learn, Launch, Lead)</span>
           </h2>
           <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
             <table className="w-full text-left text-sm">
@@ -153,18 +203,18 @@ const Convocatoria = ()=> {
               </thead>
               <tbody>
                 <tr className="odd:bg-white even:bg-gray-50">
-                  <td className="px-4 py-3">Aprende</td>
-                  <td className="px-4 py-3">Proyectos de educación y divulgación espacial</td>
+                  <td className="px-4 py-3">Aprende (Learn)</td>
+                  <td className="px-4 py-3">Educación y divulgación científica sobre el espacio</td>
                   <td className="px-4 py-3 font-semibold">LRN</td>
                 </tr>
                 <tr className="odd:bg-white even:bg-gray-50">
-                  <td className="px-4 py-3">Lanza</td>
-                  <td className="px-4 py-3">Soluciones prácticas basadas en datos de NASA</td>
+                  <td className="px-4 py-3">Lanza (Launch)</td>
+                  <td className="px-4 py-3">Soluciones tecnológicas con base en datos abiertos de la NASA</td>
                   <td className="px-4 py-3 font-semibold">LCH</td>
                 </tr>
                 <tr className="odd:bg-white even:bg-gray-50">
-                  <td className="px-4 py-3">Lidera</td>
-                  <td className="px-4 py-3">Iniciativas de innovación y liderazgo comunitario</td>
+                  <td className="px-4 py-3">Lidera (Lead)</td>
+                  <td className="px-4 py-3">Innovación y liderazgo con impacto en la comunidad</td>
                   <td className="px-4 py-3 font-semibold">LDR</td>
                 </tr>
               </tbody>
@@ -172,92 +222,107 @@ const Convocatoria = ()=> {
           </div>
         </section>
 
-        {/* Etapas */}
+        {/* 4. Etapas */}
         <section id="etapas" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">4. Etapas</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">4. Etapas del proceso</h2>
           <div className="mt-6 rounded-2xl border border-gray-200 p-5 shadow-sm">
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <strong>Registro interno:</strong> 17 julio – 20 septiembre 2025. Inscripción en la página oficial:
-                <a className="ml-1 underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">spaceappschallenge.org</a>.
-                Selecciona el evento local de Atoyac de Álvarez:
-                <a className="ml-1 underline" href="https://www.spaceappschallenge.org/2025/local-events/atoyac-de-alvarez/" target="_blank" rel="noreferrer">Evento Atoyac de Álvarez</a>.
+                <strong>Registro interno:</strong> 17 julio al 20 septiembre 2025. Inscripción:{" "}
+                <a className="underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">
+                  spaceappschallenge.org
+                </a>
+                .
               </li>
               <li>
-                <strong>Formación de equipos:</strong> 21 agosto – 3 octubre 2025. Enviar lista de integrantes y autorizaciones (si aplica) al correo de coordinación.
+                <strong>Formación de equipos:</strong> 21 agosto al 3 de octubre de 2025.
               </li>
               <li>
-                <strong>Hackathon presencial:</strong> 4–5 octubre 2025 (Prepa 23). <strong>5 octubre, 12:00 h</strong>: cierre de entregables (repositorio + PDF).
+                <strong>Hackathon presencial:</strong> 4 y 5 de octubre de 2025 (Presencial en la Preparatoria No. 23).
               </li>
               <li>
-                <strong>Evaluación y premiación:</strong> 5 octubre: 12:00–13:00 deliberación; 14:00 ceremonia de clausura y anuncio de ganadores.
+                <strong>Entrega de proyectos:</strong> 5 de octubre, 12:00 horas. <strong>Premiación local:</strong> 5 de
+                octubre, 14:00 horas.
               </li>
             </ul>
-            <p className="mt-3 rounded-lg border-l-8 border-[#c82333] bg-[#fff3f4] p-3 text-sm">
-              También puedes consultar el evento de Guerrero aquí:
-              <a className="ml-1 font-semibold underline" href="https://www.spaceappschallenge.org/2025/local-events/atoyac-de-alvarez/" target="_blank" rel="noreferrer">spaceappschallenge.org/2025/local-events/guerrero</a>.
-            </p>
           </div>
         </section>
 
-        {/* Evaluación */}
+        {/* 5. Evaluación */}
         <section id="evaluacion" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
           <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">5. Evaluación</h2>
           <div className="mt-6 rounded-2xl border border-gray-200 p-5 shadow-sm">
             <ul className="list-disc pl-5 space-y-2">
-              <li><strong>Creatividad e innovación:</strong> 30%</li>
-              <li><strong>Impacto y factibilidad:</strong> 30%</li>
-              <li><strong>Calidad técnica:</strong> 20%</li>
-              <li><strong>Presentación y storytelling:</strong> 20%</li>
+              <li>
+                <strong>Creatividad e innovación:</strong> 30 %
+              </li>
+              <li>
+                <strong>Impacto y factibilidad:</strong> 30 %
+              </li>
+              <li>
+                <strong>Calidad técnica:</strong> 20 %
+              </li>
+              <li>
+                <strong>Presentación y storytelling:</strong> 20 %
+              </li>
             </ul>
+            <p className="mt-3 text-sm">
+              <strong>Nota:</strong> La evaluación local estará alineada con las guías globales del Space Apps Challenge.
+              Los criterios detallados estarán disponibles a partir del 3 de octubre de 2025 en la sección de Recursos del
+              sitio oficial.
+            </p>
           </div>
         </section>
 
-        {/* Premios */}
+        {/* 6. Premios */}
         <section id="premios" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
           <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">6. Premios</h2>
           <div className="mt-6 rounded-2xl border border-gray-200 p-5 shadow-sm">
             <ul className="list-disc pl-5 space-y-2">
-              <li>Certificado de participación para todos los equipos.</li>
-              <li>Trofeos y reconocimientos oficiales de NASA para los 3 mejores proyectos de cada temática.</li>
-              <li>Mentorías personalizadas con especialistas sobre cursos de tecnología.</li>
+              <li>
+                Certificado oficial de participación emitido por la NASA (requiere registro y entrega en plataforma).
+              </li>
+              <li>Trofeos y reconocimientos a los tres mejores proyectos por temática.</li>
+              <li>Acceso a mentorías y capacitaciones tecnológicas especializadas.</li>
             </ul>
           </div>
         </section>
 
-        {/* Contacto */}
+        {/* 7. Informes y contacto */}
         <section id="contacto" className="border-t-8 border-[#e6e6e6] py-8 sm:py-10">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">7. Informes y Contacto</h2>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-[#152b55]">7. Informes y contacto</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <p className="text-sm">
-                <strong>Sitio oficial:</strong><br />
-                <a className="underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">
-                  spaceappschallenge.org/2025/local-events/guerrero
-                </a>
-              </p>
-              <p className="mt-3 text-sm">
-                <strong>Registro al evento local (Atoyac de Álvarez):</strong><br />
+                <strong>Sitio oficial del evento local:</strong>
+                <br />
                 <a
-                  className="inline-block rounded-xl bg-[#152b55] px-4 py-2 font-semibold text-white hover:opacity-90"
-                  href="https://www.spaceappschallenge.org/2025/local-events/atoyac-de-alvarez/"
+                  className="underline"
+                  href="https://www.spaceappschallenge.org/2025/local-events/guerrero/"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Ir al registro
+                  spaceappschallenge.org/2025/local-events/guerrero
                 </a>
               </p>
             </div>
             <div className="rounded-2xl border border-gray-200 p-5 shadow-sm">
               <p className="text-sm">
-                <strong>Correos:</strong> <a className="underline" href="mailto:octavio.olea@atex-it.com">octavio.olea@atex-it.com</a> · {" "}
+                <strong>Contacto:</strong>{" "}
+                <a className="underline" href="mailto:octavio.olea@atex-it.com">
+                  octavio.olea@atex-it.com
+                </a>{" "}
+                <span className="text-xs text-gray-600">(pendiente confirmar correo institucional UAGro)</span>
               </p>
               <p className="mt-2 text-sm">
-                <strong>Teléfonos:</strong> <a className="underline" href="tel:+527473219876">(781) 103 6342</a> · {" "}
-                <a className="underline" href="tel:+529602445317">(960) 244 5317</a>
-              </p>
-              <p className="mt-3 text-xs text-gray-600">
-                Únete, innova con datos reales de la NASA y demuestra el talento de Guerrero. ATEX IT SOLUTIONS te invita a ser parte de esta experiencia única.
+                <strong>Teléfonos:</strong>{" "}
+                <a className="underline" href="tel:+527473219876">
+                  (747) 321 9876
+                </a>{" "}
+                ·{" "}
+                <a className="underline" href="tel:+529602445317">
+                  (960) 244 5317
+                </a>
               </p>
             </div>
           </div>
@@ -276,5 +341,6 @@ const Convocatoria = ()=> {
       </div>
     </main>
   );
-}
+};
+
 export default Convocatoria;
