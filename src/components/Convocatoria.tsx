@@ -183,63 +183,66 @@ function MobilePager({
   const total = pages.length;
   const touch = useRef<{ x: number; y: number } | null>(null);
 
-  const next = useCallback(() => setI((v) => (v + 1) % total), [total]);
-  const prev = useCallback(() => setI((v) => (v - 1 + total) % total), [total]);
+  const next = useCallback(() => setI(v => (v + 1) % total), [total]);
+  const prev = useCallback(() => setI(v => (v - 1 + total) % total), [total]);
 
   const onTouchStart = useCallback((e: React.TouchEvent) => {
     const t = e.touches[0];
     touch.current = { x: t.clientX, y: t.clientY };
   }, []);
-
-  const onTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      if (!touch.current) return;
-      const t = e.changedTouches[0];
-      const dx = t.clientX - touch.current.x;
-      const dy = Math.abs(t.clientY - touch.current.y);
-      touch.current = null;
-      if (Math.abs(dx) > 40 && dy < 60) {
-        if (dx < 0) next();
-        else prev();
-      }
-    },
-    [next, prev]
-  );
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touch.current) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touch.current.x;
+    const dy = Math.abs(t.clientY - touch.current.y);
+    touch.current = null;
+    if (Math.abs(dx) > 40 && dy < 60) {
+      if (dx < 0) next();
+      else prev();
+    }
+  }, [next, prev]);
 
   return (
-    <section
-      className={`sm:hidden w-full ${className}`}
-      /* ⬇️ aquí el ajuste de fondo para móvil */
-      style={{
-        backgroundImage: `url('${bg}')`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top center",
-        backgroundSize: "contain",     // muestra TODO el cartel
-      }}
-    >
+    <section className={`sm:hidden w-full ${className}`}>
+      {/* === MARCO DEL CARTEL (fondo solo aquí) === */}
       <div
-        className="mx-auto max-w-[640px] px-3 py-6"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
+        className="relative mx-auto w-[94vw] max-w-[430px] rounded-lg shadow-xl overflow-hidden"
+        style={{
+          // Mantiene la altura del póster (768x1083)
+          aspectRatio: "768 / 1083",
+          backgroundImage: `url('${bg}')`,
+          backgroundSize: "cover",      // el fondo ocupa TODO el marco
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
       >
-        <div className="space-y-4">{pages[i]}</div>
-
-        <div className="mt-4 flex items-center justify-center gap-3">
-          <button
-            className="rounded-lg bg-[#152b55] px-3 py-2 text-white text-xs"
-            onClick={prev}
-          >
-            ← Anterior
-          </button>
-          <span className="text-xs text-[#1e2b45]">
-            {i + 1} / {total}
-          </span>
-          <button
-            className="rounded-lg bg-[#152b55] px-3 py-2 text-white text-xs"
-            onClick={next}
-          >
-            Siguiente →
-          </button>
+        {/* Contenido dentro del póster, con scroll interno */}
+        <div
+          className="absolute inset-0 overflow-y-auto px-3 py-4"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="space-y-4">
+            {pages[i]}
+          </div>
+          {/* Controles dentro del marco */}
+          <div className="pointer-events-auto absolute bottom-2 right-2 flex items-center gap-2 rounded-full bg-black/55 px-3 py-1 text-xs text-white">
+            <button
+              className="rounded px-1.5 py-0.5 hover:bg-white/20"
+              onClick={prev}
+              aria-label="Anterior"
+            >
+              ←
+            </button>
+            <span>{i + 1}/{total}</span>
+            <button
+              className="rounded px-1.5 py-0.5 hover:bg-white/20"
+              onClick={next}
+              aria-label="Siguiente"
+            >
+              →
+            </button>
+          </div>
         </div>
       </div>
     </section>
