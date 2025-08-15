@@ -191,29 +191,30 @@ function MobilePager({
     touch.current = { x: t.clientX, y: t.clientY };
   }, []);
 
-  const onTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touch.current) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touch.current.x;
-    const dy = Math.abs(t.clientY - touch.current.y);
-    touch.current = null;
-
-    if (Math.abs(dx) > 40 && dy < 60) {
-      if (dx < 0) {
-        next();
-      } else {
-        prev();
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!touch.current) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touch.current.x;
+      const dy = Math.abs(t.clientY - touch.current.y);
+      touch.current = null;
+      if (Math.abs(dx) > 40 && dy < 60) {
+        if (dx < 0) next();
+        else prev();
       }
-    }
-  }, [next, prev]);
+    },
+    [next, prev]
+  );
 
   return (
     <section
       className={`sm:hidden w-full ${className}`}
+      /* ⬇️ aquí el ajuste de fondo para móvil */
       style={{
         backgroundImage: `url('${bg}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "top center",
+        backgroundSize: "contain",     // muestra TODO el cartel
       }}
     >
       <div
@@ -244,7 +245,6 @@ function MobilePager({
     </section>
   );
 }
-
 
 /* =================== Contenido por página =================== */
 export default function Convocatoria() {
