@@ -1,142 +1,87 @@
 "use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import BrandMark from "@/components/BrandMark";
 
-const Navbar = () => {
-  const [activeSection, setActiveSection] = useState("about");
+const navigation = [
+  ["Inicio", "home"],
+  ["Misión", "about"],
+  ["Retos", "features"],
+  ["Agenda", "agenda"],
+  ["Sede", "venue"],
+  ["Aliados", "sponsors"],
+  ["Contacto", "contact"],
+] as const;
+
+export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
   const pathname = usePathname();
 
-  const navItems = [
-    { label: "ACERCA", section: "about" },
-    { label: "CARACTERISTICAS", section: "features" },
-    { label: "PATROCINADORES", section: "sponsors" },
-    { label: "REGISTRO", section: "register" },
-    { label: "CONVOCATORIA", href: "/convocatoria" }, // página aparte
-  ];
-
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) setOpen(false);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const onScroll = () => setCompact(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const smoothScrollTo = (section: string) => {
-    setActiveSection(section);
-    const el = document.getElementById(section);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-    setTimeout(() => setActiveSection(""), 1000);
-    setOpen(false);
-  };
-
-  const handleSectionClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    section: string
-  ) => {
-    // Si ya estamos en Home, prevenimos la navegación y hacemos scroll suave.
-    if (pathname === "/") {
-      e.preventDefault();
-      smoothScrollTo(section);
-    } else {
-      // Si estamos en otra ruta, dejamos que Link vaya a /#section
-      setOpen(false);
-    }
-  };
+  const hrefFor = (section: string) =>
+    pathname === "/" ? `#${section}` : `/#${section}`;
 
   return (
-    <nav className="relative z-50 bg-[#1D3557] text-white">
-      <div className="flex justify-between items-center max-w-5xl mx-auto px-4 py-4">
-        <div className="font-bold text-2xl tracking-widest select-none">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image
-              src="/logo-removebg-preview.png"
-              alt="NASA Space Apps Atoyac Logo"
-              width={100}
-              height={100}
-              priority
-            />
-          </Link>
-        </div>
+    <header className={`site-nav ${compact ? "site-nav--compact" : ""}`}>
+      <div className="site-nav__inner">
+        <Link className="site-brand" href="/" onClick={() => setOpen(false)}>
+          <BrandMark />
+          <span>
+            <strong>SPACE APPS</strong>
+            <small>GUERRERO</small>
+          </span>
+        </Link>
 
-        {/* Desktop */}
-        <div className="hidden md:flex space-x-12">
-          {navItems.map((item) =>
-            item.href ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="hover:text-[#D4471D] transition-colors duration-200 font-medium tracking-widest text-lg"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <Link
-                key={item.section}
-                href={`/#${item.section}`} // siempre apunta al home + ancla
-                onClick={(e) => handleSectionClick(e, item.section!)}
-                className={`hover:text-[#D4471D] transition-colors duration-200 font-medium tracking-widest text-lg ${
-                  activeSection === item.section
-                    ? "text-[#D4471D] underline underline-offset-8"
-                    : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-        </div>
+        <nav className="site-nav__desktop" aria-label="Navegación principal">
+          {navigation.map(([label, section]) => (
+            <a key={section} href={hrefFor(section)}>
+              {label}
+            </a>
+          ))}
+        </nav>
 
-        {/* Mobile toggle */}
+        <Link className="site-nav__cta" href="/convocatoria">
+          Regístrate ahora <span aria-hidden="true">→</span>
+        </Link>
+
         <button
-          className="md:hidden flex items-center px-3 py-2 rounded focus:outline-none"
-          onClick={() => setOpen(!open)}
+          className="site-nav__toggle"
+          type="button"
+          aria-label={open ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={open}
+          onClick={() => setOpen((current) => !current)}
         >
-          <FontAwesomeIcon icon={open ? faTimes : faBars} className="text-2xl" />
+          <span />
+          <span />
         </button>
       </div>
 
-      {/* Mobile */}
-      <div
-        className={`md:hidden bg-[#1D3557] transition-all duration-300 ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
-        }`}
+      <nav
+        className={`site-nav__mobile ${open ? "site-nav__mobile--open" : ""}`}
+        aria-label="Navegación móvil"
       >
-        <div className="flex flex-col items-center space-y-4 py-6">
-          {navItems.map((item) =>
-            item.href ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="hover:text-[#D4471D] transition-colors duration-200 font-medium tracking-widest text-lg"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <Link
-                key={item.section}
-                href={`/#${item.section}`}
-                onClick={(e) => handleSectionClick(e, item.section!)}
-                className={`hover:text-[#D4471D] transition-colors duration-200 font-medium tracking-widest text-lg ${
-                  activeSection === item.section
-                    ? "text-[#D4471D] underline underline-offset-8"
-                    : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-        </div>
-      </div>
-    </nav>
+        {navigation.map(([label, section]) => (
+          <a
+            key={section}
+            href={hrefFor(section)}
+            onClick={() => setOpen(false)}
+          >
+            {label}
+          </a>
+        ))}
+        <Link href="/convocatoria" onClick={() => setOpen(false)}>
+          Consultar convocatoria
+        </Link>
+      </nav>
+    </header>
   );
-};
-
-export default Navbar;
+}

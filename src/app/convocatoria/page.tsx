@@ -1,11 +1,13 @@
-'use client';
-
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import Convocatoria from '@/components/Convocatoria';
+import Navbar from "@/components/Navbar";
+import Convocatoria from "@/components/Convocatoria";
+import Footer from "@/components/Footer";
 
 export default function ConvocatoriaPage() {
   return (
-      <><Navbar /><Convocatoria /><Footer /></>
+    <>
+      <Navbar />
+      <Convocatoria />
+      <Footer />
+    </>
   );
 }

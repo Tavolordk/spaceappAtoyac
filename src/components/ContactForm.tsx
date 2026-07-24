@@ -1,97 +1,104 @@
-'use client';
-import { FC } from 'react';
-import { useForm } from '../hooks/useForm';
+"use client";
 
-const ContactForm: FC = () => {
-  const { formData, status, handleChange, handleSubmit } = useForm({
-    fullname: '',
-    email: '',
-    phone: '',
-    mensaje: ''
+import { useForm } from "@/hooks/useForm";
+
+export default function ContactForm() {
+  const {
+    formData,
+    status,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+  } = useForm({
+    fullname: "",
+    email: "",
+    phone: "",
+    mensaje: "",
   });
 
   return (
-    <section id="contacto" className="py-5" style={{ background: 'rgba(255,255,255,0.02)' }}>
-      <div className="container text-center">
-        <h3 className="section-title">Contacto</h3>
-        <p>¿Tienes dudas o quieres más información?</p>
-        <div className="row justify-content-center">
-          <div className="col-md-6 text-start">
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
-                <label htmlFor="fullname" className="form-label color-primary">
-                  Nombre completo
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="fullname"
-                  placeholder="Escribe tu nombre"
-                  name="fullname"
-                  value={formData.fullname}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label color-primary">
-                  Correo electrónico
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  placeholder="Escribe tu correo"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="phone" className="form-label color-primary">
-                  Teléfono
-                </label>
-                <input
-                  type="tel"
-                  className="form-control"
-                  id="phone"
-                  placeholder="Inserta número"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="mensaje" className="form-label color-primary">
-                  Mensaje
-                </label>
-                <textarea
-                  className="form-control"
-                  id="mensaje"
-                  rows={5}
-                  name="mensaje"
-                  placeholder="Escribe tu comentario"
-                  value={formData.mensaje}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <button type="submit" className="btn btn-primary form-submit">
-                Enviar
-              </button>
-              {status && <p className="mt-2">{status}</p>}
-            </form>
+    <section className="contact section" id="contact">
+      <div className="section__inner contact__layout">
+        <div className="contact__intro">
+          <p className="eyebrow eyebrow--light">Contacto</p>
+          <h2>¿Tienes una duda antes de participar?</h2>
+          <p>
+            Escríbenos sobre registro, equipos, sede, mentorías o participación
+            como aliado.
+          </p>
+          <div className="contact__social">
+            <a
+              href="https://www.facebook.com/profile.php?id=61573686727475"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Facebook ↗
+            </a>
+            <a
+              href="https://www.instagram.com/nasa.space.apps.atoyac/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram ↗
+            </a>
           </div>
         </div>
-        <div className="mt-3">
-          <a href="https://www.facebook.com/profile.php?id=61573686727475" className="btn btn-outline-light me-2" target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a href="https://www.instagram.com/nasa.space.apps.atoyac/" className="btn btn-outline-light" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
+
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <div className="contact-form__row">
+            <label>
+              <span>Nombre completo</span>
+              <input
+                name="fullname"
+                value={formData.fullname}
+                onChange={handleChange}
+                autoComplete="name"
+                required
+              />
+            </label>
+            <label>
+              <span>Correo electrónico</span>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                autoComplete="email"
+                required
+              />
+            </label>
+          </div>
+
+          <label>
+            <span>Teléfono</span>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              autoComplete="tel"
+            />
+          </label>
+
+          <label>
+            <span>Mensaje</span>
+            <textarea
+              name="mensaje"
+              value={formData.mensaje}
+              onChange={handleChange}
+              rows={4}
+              required
+            />
+          </label>
+
+          <button className="button button--aqua" disabled={isSubmitting}>
+            {isSubmitting ? "Enviando…" : "Enviar mensaje"}
+            <span aria-hidden="true">→</span>
+          </button>
+
+          {status ? <p className="contact-form__status">{status}</p> : null}
+        </form>
       </div>
     </section>
   );
-};
-
-export default ContactForm;
+}

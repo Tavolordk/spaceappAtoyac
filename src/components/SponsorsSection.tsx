@@ -1,30 +1,47 @@
 import Image from "next/image";
 
-const SponsorsSection = () => {
-  const sponsors = [
-    { name: "UAGRO", logo: "/uagro.png" },
-    { name: "ATEX IT", logo: "/atex it.png" }
-  ];
+const sponsors = [
+  {
+    name: "Universidad Autónoma de Guerrero",
+    logo: "/uagro.png",
+  },
+  {
+    name: "ATEX IT Solutions",
+    logo: "/atex it.png",
+  },
+];
 
+export default function SponsorsSection() {
   return (
-    <div className="py-16 bg-[#EDE0D4]" id="sponsors">
-      <div className="max-w-5xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-[#1D3557] mb-12">Nuestros Patrocinadores</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-          {sponsors.map((sponsor, index) => (
-            <div key={index} className="flex items-center justify-center">
+    <section className="sponsors section" id="sponsors">
+      <div className="section__inner">
+        <div className="sponsors__heading">
+          <p className="eyebrow">Aliados que hacen posible esto</p>
+          <p>
+            Academia, tecnología y comunidad trabajando para ampliar las
+            oportunidades de innovación en Guerrero.
+          </p>
+        </div>
+
+        <div className="sponsors__logos">
+          {sponsors.map((sponsor) => (
+            <article className="sponsor-logo" key={sponsor.name}>
               <Image
                 src={sponsor.logo}
-                alt={`${sponsor.name} logo`}
-                width={150}
-                height={80}
-                className="max-w-full h-auto object-contain"
-              />            </div>
+                alt={sponsor.name}
+                width={220}
+                height={96}
+                style={{ objectFit: "contain" }}
+              />
+            </article>
           ))}
+          <article className="sponsor-logo sponsor-logo--open">
+            <span>+</span>
+            <strong>Nuevos aliados</strong>
+            <small>Instituciones, empresas y colectivos</small>
+          </article>
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default SponsorsSection;
+}

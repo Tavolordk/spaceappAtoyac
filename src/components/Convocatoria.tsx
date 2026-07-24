@@ -1,579 +1,133 @@
-"use client";
+import Link from "next/link";
+import { agenda, siteConfig } from "@/data/site";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+const sections = [
+  {
+    number: "01",
+    title: "Participantes",
+    body: [
+      "Educación media superior.",
+      "Educación superior, de la UAGro u otras instituciones.",
+      "Profesionistas, egresados y público general.",
+      "Los equipos podrán integrar hasta seis personas con perfiles diversos.",
+    ],
+  },
+  {
+    number: "02",
+    title: "Normativa general",
+    body: [
+      "Los proyectos deberán responder a un reto publicado para la edición.",
+      "Se aceptan soluciones de software, hardware, modelos, narrativas y visualizaciones.",
+      "El trabajo debe ser original y reconocer cualquier material previo.",
+      "El uso de herramientas de inteligencia artificial deberá declararse.",
+    ],
+  },
+  {
+    number: "03",
+    title: "Entregables",
+    body: [
+      "Repositorio o enlace público del proyecto.",
+      "Descripción del problema, solución, proceso e impacto.",
+      "Presentación final frente al jurado local.",
+      "Material suficiente para comprender y evaluar el prototipo.",
+    ],
+  },
+  {
+    number: "04",
+    title: "Evaluación",
+    body: [
+      "Creatividad e innovación: 30%.",
+      "Impacto y factibilidad: 30%.",
+      "Calidad técnica: 20%.",
+      "Presentación y narrativa: 20%.",
+    ],
+  },
+];
 
-/** Cambia esta ruta si tu fondo está en otra carpeta (ideal sin espacios) */
-const BG = "/Fondo para página uagro-nasa.png";
-
-/* === UI helpers === */
-function Chip({
-  children,
-  color = "primary",
-}: {
-  children: React.ReactNode;
-  color?: "primary" | "danger";
-}) {
-  const cls =
-    color === "danger"
-      ? "bg-[#e6262a] text-white"
-      : "bg-[#152b55] text-white";
-  return (
-    <span className={`inline-block rounded-md px-3 py-1 text-sm font-semibold ${cls}`}>
-      {children}
-    </span>
-  );
-}
-
-function Card({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={`rounded-2xl bg-white/92 shadow-sm ring-1 ring-black/5 ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-/* === Flip 3D para escritorio (≥ sm) === */
-function DesktopBook({
-  pages,
-  bg,
-  className = "",
-}: {
-  pages: React.ReactNode[];
-  bg: string;
-  className?: string;
-}) {
-  const [index, setIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false);
-  const [dir, setDir] = useState<1 | -1>(1);
-  const [frontContent, setFrontContent] = useState(pages[0]);
-  const [backContent, setBackContent] = useState(pages[1] ?? pages[0]);
-  const total = pages.length;
-  const anim = useRef(false);
-
-  const goTo = useCallback(
-    (nextIndex: number) => {
-      if (anim.current || nextIndex === index) return;
-      anim.current = true;
-      setDir(nextIndex > index ? 1 : -1);
-      setBackContent(pages[nextIndex]);
-      setFlipped((f) => !f);
-    },
-    [index, pages]
-  );
-
-  const next = useCallback(() => goTo((index + 1) % total), [goTo, index, total]);
-  const prev = useCallback(() => goTo((index - 1 + total) % total), [goTo, index, total]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        next();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        prev();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [next, prev]);
-
-  const onTransitionEnd = () => {
-    const newIndex = pages.indexOf(backContent);
-    setFrontContent(backContent);
-    setIndex(newIndex >= 0 ? newIndex : index);
-    setFlipped(false);
-    anim.current = false;
-  };
-
-  const transformValue = useMemo(() => {
-    if (!flipped) return "rotateY(0deg)";
-    return dir === 1 ? "rotateY(180deg)" : "rotateY(-180deg)";
-  }, [flipped, dir]);
-
-  return (
-    <section className={`hidden sm:flex w-full justify-center ${className}`}>
-      <div
-        className="relative w-full max-w-[900px] rounded-md shadow-xl overflow-hidden select-none cursor-pointer"
-        style={{
-          backgroundImage: `url('${bg}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          paddingBottom: "141%", // relación 768x1083
-          perspective: "1600px",
-        }}
-        onClick={next}
-        role="button"
-        title="Click o ←/→ para pasar de página"
-      >
-        <div
-          className="absolute inset-0 transition-transform duration-700 ease-out"
-          style={{
-            transformStyle: "preserve-3d",
-            transform: transformValue,
-          }}
-          onTransitionEnd={onTransitionEnd}
-        >
-          <div
-            className="absolute inset-0"
-            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
-          >
-            {frontContent}
-          </div>
-          <div
-            className="absolute inset-0"
-            style={{
-              transform: "rotateY(180deg)",
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-          >
-            {backContent}
-          </div>
-        </div>
-
-        {/* Indicador */}
-        <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2 rounded-full bg-black/55 px-3 py-1 text-xs text-white">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              prev();
-            }}
-            className="rounded px-1.5 py-0.5 hover:bg-white/20"
-            aria-label="Anterior"
-          >
-            ←
-          </button>
-          <span>
-            {index + 1}/{total}
-          </span>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              next();
-            }}
-            className="rounded px-1.5 py-0.5 hover:bg-white/20"
-            aria-label="Siguiente"
-          >
-            →
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-function CardM({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`rounded-xl bg-white/75 backdrop-blur-[2px] shadow ring-1 ring-black/10 px-3 py-2 ${className}`}>
-      {children}
-    </div>
-  );
-}
-/* ======== MÓVIL — 7 páginas, texto reducido por página ======== */
-const m1 = (
-  <>
-    <CardM><p className="text-[14px] leading-snug">
-      La NASA, la UAGro y ATEX IT SOLUTIONS <b>convocan</b> a participar en el
-      <b> NASA Space Apps Challenge 2025 Guerrero</b>.
-    </p></CardM>
-    <div className="text-center">
-      <span className="rounded-md bg-[#e6262a] px-3 py-1 text-white text-xs font-bold">CONVOCAN A:</span>
-    </div>
-    <CardM><p className="text-[14px] leading-snug">
-      Estudiantes, profesionistas y público en general — experiencia global de innovación y creatividad científica.
-    </p></CardM>
-  </>
-);
-
-const m2 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#e6262a] px-2.5 py-0.5 text-white text-xs font-bold">OBJETIVO</span>
-      <p className="mt-1.5 text-[14px] leading-snug">
-        Impulsar habilidades STEM, la innovación colaborativa y el uso creativo de datos de la NASA.
-      </p>
-    </CardM>
-    <CardM>
-      <span className="rounded-md bg-[#e6262a] px-2.5 py-0.5 text-white text-xs font-bold">LUGAR Y FECHAS</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Escuela Preparatoria No. 23</li>
-        <li>San Jerónimo de Juárez, Guerrero</li>
-        <li>4 y 5 de octubre de 2025</li>
-      </ul>
-    </CardM>
-  </>
-);
-
-const m3 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">1. PARTICIPANTES</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li><b>Media Superior</b></li>
-        <li><b>Superior</b> (UAGro u otras)</li>
-        <li><b>Profesional</b></li>
-      </ul>
-      <p className="mt-1 text-[12px] text-gray-700">
-        Menores de 16 con tutor presente; menores de 18 con carta de autorización.
-      </p>
-    </CardM>
-  </>
-);
-
-const m4 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">2. NORMATIVA</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Presencial o virtual.</li>
-        <li>Proyectos el <b>4–5 de octubre</b> (desafíos oficiales).</li>
-        <li>Software, hardware, modelos, narrativas, visualizaciones con datos NASA.</li>
-        <li>Originalidad; citar material previo.</li>
-        <li>Declarar uso de <b>IA</b>. Idiomas: ES/EN.</li>
-        <li>Referencias <b>APA</b>.</li>
-      </ul>
-    </CardM>
-  </>
-);
-
-const m5 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">ENTREGABLES</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Repositorio público.</li>
-        <li>PDF (máx. 5 páginas) con descripción.</li>
-        <li>Asesoría a finalistas rumbo a etapa global.</li>
-      </ul>
-    </CardM>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">ETAPAS</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Registro: 17 jul – 20 sep 2025 (<a className="underline" href="https://www.spaceappschallenge.org/" target="_blank">spaceappschallenge.org</a>)</li>
-        <li>Formación: 21 ago – 3 oct</li>
-        <li>Hackathon: 4–5 oct (Prepa 23)</li>
-        <li>Entrega: 5 oct, 12:00 · Premiación: 14:00</li>
-      </ul>
-    </CardM>
-  </>
-);
-
-const m6 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">EJES TEMÁTICOS</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li><b>Aprende (LRN)</b></li>
-        <li><b>Lanza (LCH)</b></li>
-        <li><b>Lidera (LDR)</b></li>
-      </ul>
-    </CardM>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">EVALUACIÓN</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Creatividad/Innovación: 30%</li>
-        <li>Impacto/Factibilidad: 30%</li>
-        <li>Calidad técnica: 20%</li>
-        <li>Presentación & storytelling: 20%</li>
-      </ul>
-    </CardM>
-  </>
-);
-
-const m7 = (
-  <>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">PREMIOS</span>
-      <ul className="mt-1.5 list-disc pl-5 text-[14px] leading-snug">
-        <li>Certificado oficial (registro + entrega).</li>
-        <li>Trofeos a los tres mejores por temática.</li>
-        <li>Mentorías y capacitaciones tecnológicas.</li>
-      </ul>
-    </CardM>
-    <CardM>
-      <span className="rounded-md bg-[#152b55] px-2.5 py-0.5 text-white text-xs font-semibold">INFORMES Y CONTACTO</span>
-      <p className="mt-1.5 text-[14px] leading-snug">
-        Sitio local:{" "}
-        <a className="underline" href="https://www.spaceappschallenge.org/2025/local-events/guerrero/" target="_blank">
-          spaceappschallenge.org/2025/local-events/guerrero
-        </a><br />
-        Correo: <a className="underline" href="mailto:octavio.olea@atex-it.com">octavio.olea@atex-it.com</a><br />
-        Tel: <a className="underline" href="tel:+527473219876">(747) 321 9876</a> ·{" "}
-        <a className="underline" href="tel:+529602445317">(960) 244 5317</a>
-      </p>
-    </CardM>
-  </>
-);
-
-/* === Paginador móvil (< sm), apilado y con swipe === */
-function MobilePager({
-  pages,
-  bg,
-  className = "",
-}: {
-  pages: React.ReactNode[];
-  bg: string;
-  className?: string;
-}) {
-  const [i, setI] = useState(0);
-  const total = pages.length;
-  const touch = useRef<{ x: number; y: number } | null>(null);
-
-  const next = useCallback(() => setI(v => (v + 1) % total), [total]);
-  const prev = useCallback(() => setI(v => (v - 1 + total) % total), [total]);
-
-  const onTouchStart = useCallback((e: React.TouchEvent) => {
-    const t = e.touches[0];
-    touch.current = { x: t.clientX, y: t.clientY };
-  }, []);
-  const onTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touch.current) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touch.current.x;
-    const dy = Math.abs(t.clientY - touch.current.y);
-    touch.current = null;
-    if (Math.abs(dx) > 40 && dy < 60) {
-      if (dx < 0) next();
-      else prev();
-    }
-  }, [next, prev]);
-
-  return (
-    <section className={`sm:hidden w-full ${className}`}>
-      {/* Marco con relación del póster */}
-      <div
-        className="relative mx-auto w-[94vw] max-w-[430px] rounded-xl shadow-xl overflow-hidden"
-        style={{
-          aspectRatio: "768 / 1083",
-          backgroundImage: `url('${bg}')`,
-          backgroundSize: "contain",      // se aprecia TODO el cartel
-          backgroundPosition: "top center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        {/* Overlay scrollable: el contenido NO sale del cartel */}
-        <div
-          className="absolute inset-0 overflow-y-auto px-2.5 py-3"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <div className="mx-auto w-[88%] space-y-2">{pages[i]}</div>
-
-          {/* Controles dentro del marco */}
-          <div className="pointer-events-auto sticky bottom-2 ml-auto mr-2 mt-2 flex w-fit items-center gap-2 rounded-full bg-black/55 px-3 py-1 text-xs text-white">
-            <button
-              className="rounded px-1.5 py-0.5 hover:bg-white/20"
-              onClick={prev}
-              aria-label="Anterior"
-            >
-              ←
-            </button>
-            <span>{i + 1}/{total}</span>
-            <button
-              className="rounded px-1.5 py-0.5 hover:bg-white/20"
-              onClick={next}
-              aria-label="Siguiente"
-            >
-              →
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =================== Contenido por página =================== */
 export default function Convocatoria() {
-  /* ---------- PÁGINA 1 (Convocatoria) ---------- */
-  const Page1_desktop = (
-    <>
-      {/* Intro + CONVOCAN A */}
-      <div className="absolute left-[6%] top-[14%] w-[88%] text-[clamp(12px,2.7vw,18px)] leading-relaxed">
-        <div className="inline-block rounded-lg bg-white/90 px-3 py-2 shadow-sm ring-1 ring-black/5">
-          La NASA (Administración Nacional de Aeronáutica y del Espacio), a través de su
-          Desafío Internacional Space Apps, en colaboración con la Universidad Autónoma de
-          Guerrero (UAGro) y la empresa de tecnologías ATEX IT SOLUTIONS,
-        </div>
-        <div className="mt-3 text-center text-[clamp(16px,5vw,34px)] font-extrabold tracking-wide text-[#e6262a]">
-          CONVOCAN A:
-        </div>
-        <div className="mt-2 rounded-lg bg-white/90 px-3 py-2 shadow-sm ring-1 ring-black/5">
-          Estudiantes, profesionistas y público en general a participar en el{" "}
-          <b>NASA Space Apps Challenge 2025 Guerrero</b>, una experiencia global de innovación y creatividad científica.
-        </div>
-      </div>
-
-      {/* OBJETIVO */}
-      <Card className="absolute left-[6%] top-[64%] w-[88%] px-4 py-4">
-        <Chip color="danger">OBJETIVO:</Chip>
-        <p className="mt-2 text-[clamp(12px,2.7vw,18px)] leading-relaxed">
-          Impulsar el desarrollo de habilidades en ciencia, tecnología, ingeniería y
-          matemáticas (STEM) entre estudiantes de la UAGro y público en general mayor de
-          16 años, promoviendo la innovación colaborativa, el uso creativo de datos
-          espaciales y el fortalecimiento de competencias técnicas y de resolución de
-          problemas.
-        </p>
-      </Card>
-
-      {/* LUGAR Y FECHAS */}
-      <Card className="absolute left-[6%] top-[86%] w-[60%] px-4 py-3">
-        <Chip color="danger">LUGAR Y FECHAS</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.7vw,18px)]">
-          <li>Escuela Preparatoria No. 23</li>
-          <li>San Jerónimo de Juárez, Guerrero</li>
-          <li>4 y 5 de octubre de 2025</li>
-        </ul>
-      </Card>
-    </>
-  );
-
-
-  /* ---------- PÁGINA 2 (BASES parte 1) ---------- */
-  const Page2_desktop = (
-    <>
-      <div className="absolute left-1/2 top-[10.5%] -translate-x-1/2">
-        <span className="rounded-md bg-[#e6262a] px-4 py-1.5 text-[clamp(14px,3.8vw,20px)] font-extrabold text-white shadow">
-          BASES
-        </span>
-      </div>
-
-      {/* 1. PARTICIPANTES */}
-      <Card className="absolute left-[5.5%] top-[19%] w-[41.5%] px-4 py-4">
-        <Chip>1. PARTICIPANTES</Chip>
-        <p className="mt-2 text-[clamp(12px,2.6vw,16px)]">
-          Podrán inscribirse personas mayores de 16 años, organizadas de manera individual o en equipos de 6 integrantes, en las siguientes categorías:
-        </p>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1.5">
-          <li><b>Educación Media Superior:</b> Estudiantes de todos los subsistemas.</li>
-          <li><b>Educación Superior:</b> Estudiantes de la UAGro y otras instituciones.</li>
-          <li><b>Profesional:</b> Público general, egresados y profesionales de áreas afines.</li>
-        </ul>
-        <p className="mt-2 text-[clamp(11px,2.4vw,14px)] text-gray-700">
-          <b>Nota:</b> Menores de 16 años solo con tutor presente; menores de 18 con carta de autorización.
-        </p>
-      </Card>
-
-      {/* 2. NORMATIVA GENERAL */}
-      <Card className="absolute left-[53%] top-[19%] w-[41.5%] px-4 py-4">
-        <Chip>2. NORMATIVA GENERAL</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1.5">
-          <li>Participación <b>presencial o virtual</b>.</li>
-          <li>Desarrollo el <b>4 y 5 de octubre</b> respondiendo un desafío oficial.</li>
-          <li>Se aceptan software, hardware, modelos, narrativas, visualizaciones con <b>datos abiertos de la NASA</b>.</li>
-          <li>Originalidad; si hay material previo, indicar porcentaje y citar.</li>
-          <li>Declarar uso de <b>IA</b> (tipo y porcentaje). Idiomas: español o inglés.</li>
-          <li>Referencias en formato <b>APA</b> (normas-apa.org).</li>
-        </ul>
-        <div className="mt-3 rounded-lg border-l-8 border-[#c82333] bg-[#fff3f4] px-3 py-2 text-[clamp(11px,2.5vw,15px)]">
-          <p className="font-semibold">Entrega final</p>
-          <ul className="mt-1 list-disc pl-5 space-y-1">
-            <li>Repositorio público del proyecto.</li>
-            <li>PDF (máx. 5 páginas) con descripción.</li>
-            <li>Asesoría adicional para finalistas rumbo a etapa global.</li>
-          </ul>
-        </div>
-      </Card>
-    </>
-  );
-
-  /* ---------- PÁGINA 3 (BASES parte 2) ---------- */
-  const Page3_desktop = (
-    <>
-      <Card className="absolute left-[5.5%] top-[16%] w-[41.5%] px-4 py-4">
-        <Chip>3. EJES TEMÁTICOS (LEARN, LAUNCH, LEAD)</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1.5">
-          <li><b>Aprende (LRN):</b> Educación y divulgación sobre el espacio.</li>
-          <li><b>Lanza (LCH):</b> Soluciones basadas en datos NASA.</li>
-          <li><b>Lidera (LDR):</b> Innovación y liderazgo con impacto.</li>
-        </ul>
-      </Card>
-
-      <Card className="absolute left-[53%] top-[16%] w-[41.5%] px-4 py-4">
-        <Chip>4. ETAPAS DEL PROCESO</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1.5">
-          <li>
-            <b>Registro interno:</b> 17 julio – 20 septiembre 2025.{" "}
-            <a className="underline" href="https://www.spaceappschallenge.org/" target="_blank" rel="noreferrer">
-              spaceappschallenge.org
-            </a>
-          </li>
-          <li>Formación: 21 agosto – 3 octubre 2025.</li>
-          <li>Hackathon presencial: 4 y 5 de octubre (Prepa 23).</li>
-          <li>Entrega: 5 de octubre, 12:00 h.</li>
-          <li>Premiación: 5 de octubre, 14:00 h.</li>
-        </ul>
-      </Card>
-
-      <Card className="absolute left-[5.5%] top-[58%] w-[41.5%] px-4 py-4">
-        <Chip>5. EVALUACIÓN</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1">
-          <li>Creatividad e innovación: <b>30 %</b></li>
-          <li>Impacto y factibilidad: <b>30 %</b></li>
-          <li>Calidad técnica: <b>20 %</b></li>
-          <li>Presentación y storytelling: <b>20 %</b></li>
-        </ul>
-        <p className="mt-2 text-[clamp(11px,2.4vw,14px)] text-gray-700">
-          La evaluación local se alinea con las guías globales del Space Apps Challenge.
-        </p>
-      </Card>
-
-      <Card className="absolute left-[53%] top-[58%] w-[41.5%] px-4 py-4">
-        <Chip>6. PREMIOS</Chip>
-        <ul className="mt-2 list-disc pl-5 text-[clamp(12px,2.6vw,16px)] space-y-1.5">
-          <li>Certificado oficial de participación (requiere registro y entrega en plataforma).</li>
-          <li>Trofeos y reconocimientos a los tres mejores proyectos por temática.</li>
-          <li>Mentorías y capacitaciones tecnológicas especializadas.</li>
-        </ul>
-      </Card>
-
-      <Card className="absolute left-[5.5%] top-[85%] w-[70%] px-4 py-3">
-        <Chip>7. INFORMES Y CONTACTO</Chip>
-        <div className="mt-2 text-[clamp(11px,2.5vw,15px)] leading-snug">
-          Sitio local:{" "}
-          <a className="underline" href="https://www.spaceappschallenge.org/2025/local-events/guerrero/" target="_blank" rel="noreferrer">
-            spaceappschallenge.org/2025/local-events/guerrero
-          </a>
-          <br />
-          Correo: <a className="underline" href="mailto:octavio.olea@atex-it.com">octavio.olea@atex-it.com</a>{" "}
-          <span className="text-xs text-gray-600">(pendiente confirmar correo institucional UAGro)</span>
-          <br />
-          Teléfonos: <a className="underline" href="tel:+527473219876">(747) 321 9876</a> ·{" "}
-          <a className="underline" href="tel:+529602445317">(960) 244 5317</a>
-        </div>
-      </Card>
-    </>
-  );
-
-  /* Colecciones para escritorio vs móvil */
-  const desktopPages = [Page1_desktop, Page2_desktop, Page3_desktop];
-const mobilePages = [m1, m2, m3, m4, m5, m6, m7];
-
   return (
-    <section id="convocatoria" className="mx-auto flex max-w-[1100px] flex-col gap-8 px-3 py-8 text-[#0a0a0a]">
-      {/* Escritorio: póster + flip 3D */}
-      <DesktopBook pages={desktopPages} bg={BG} className="mt-2" />
+    <main className="call-page">
+      <section className="call-hero">
+        <div className="call-hero__inner">
+          <p className="hero__date">
+            Convocatoria local · {siteConfig.year}
+          </p>
+          <h1>Construye una solución desde Guerrero.</h1>
+          <p>
+            Participa en un fin de semana de ciencia, creatividad, tecnología y
+            colaboración multidisciplinaria.
+          </p>
+          <div className="call-hero__meta">
+            <span>{siteConfig.dateLabel}</span>
+            <span>{siteConfig.venue.name}</span>
+            <span>{siteConfig.venue.city}</span>
+          </div>
+        </div>
+      </section>
 
-      {/* Móvil: apilado con swipe */}
-      <MobilePager pages={mobilePages} bg={BG} className="mt-2" />
+      <section className="call-content section">
+        <div className="section__inner">
+          <div className="call-intro">
+            <p className="eyebrow">Objetivo</p>
+            <h2>
+              Impulsar habilidades STEM y el uso creativo de datos abiertos.
+            </h2>
+            <p>
+              La convocatoria está dirigida a personas mayores de 16 años. No
+              es necesario llegar con un equipo completo ni dominar una sola
+              disciplina.
+            </p>
+          </div>
 
-      {/* CTA común */}
-      <div className="mt-1 flex justify-center">
-        <a
-          className="inline-block rounded-xl bg-[#1e3a5f] px-5 py-3 text-sm font-semibold text-white shadow hover:opacity-95"
-          href="https://www.spaceappschallenge.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Conoce los desafíos oficiales
-        </a>
-      </div>
-    </section>
+          <div className="call-grid">
+            {sections.map((section) => (
+              <article className="call-card" key={section.number}>
+                <span>{section.number}</span>
+                <h3>{section.title}</h3>
+                <ul>
+                  {section.body.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <div className="call-timeline">
+            <div>
+              <p className="eyebrow">Agenda general</p>
+              <h2>{siteConfig.dateLabel}</h2>
+            </div>
+            <div>
+              {agenda.map((day) => (
+                <article key={day.day}>
+                  <strong>{day.day}</strong>
+                  {day.entries.map(([time, activity]) => (
+                    <p key={`${day.day}-${time}`}>
+                      <time>{time}</time>
+                      {activity}
+                    </p>
+                  ))}
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="call-cta">
+            <div>
+              <p className="eyebrow eyebrow--light">Siguiente paso</p>
+              <h2>Prepárate para registrar tu equipo.</h2>
+              <p>
+                La liga oficial de registro se publicará en este espacio cuando
+                esté habilitada para la edición {siteConfig.year}.
+              </p>
+            </div>
+            <Link className="button button--aqua" href="/#contact">
+              Recibir información <span>→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

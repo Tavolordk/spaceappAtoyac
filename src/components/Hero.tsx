@@ -1,72 +1,64 @@
-"use client";
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import Countdown from "@/components/Countdown";
+import SectionIcon from "@/components/SectionIcon";
+import { siteConfig } from "@/data/site";
 
-
-const Hero = () => {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date();
-      const targetDate = new Date("2025-07-17T00:00:00-06:00");
-      const diff = targetDate.getTime() - now.getTime();
-
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((diff / 1000 / 60) % 60),
-          seconds: Math.floor((diff / 1000) % 60),
-        });
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const scrollToRegister = () => {
-    const el = document.getElementById("register");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+export default function Hero() {
   return (
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center mt-12 px-4 max-w-5xl mx-auto">
-      <div className="md:w-3/5 text-left flex flex-col items-start">
-        <h1 className="text-4xl md:text-5xl font-bold text-[#1D3557] mb-4 leading-tight">
-          NASA SPACE APPS<br />CHALLENGE GUERRERO 2025
-        </h1>
-        <p className="text-xl text-[#7F4F24] mb-6">Comienzo de registros el 17 de Julio 2025</p>
-        <button
-          className="bg-[#2A9D8F] hover:bg-[#21867B] text-white font-semibold py-2 px-8 rounded-xl transition duration-300 mb-6"
-          onClick={scrollToRegister}
-        >
-          REGISTRATE AQUI
-        </button>
-        <div className="flex justify-start mt-2 flex-wrap gap-2">
-          {Object.entries(timeLeft).map(([label, value]) => (
-            <div key={label} className="p-2 bg-[#EDE0D4] rounded-lg w-20">
-              <div className="text-center text-3xl font-bold text-[#7F4F24]">{String(value).padStart(2, "0")}</div>
-              <div className="text-center text-xs text-[#7F4F24] tracking-widest">{label.toUpperCase()}</div>
-            </div>
-          ))}
+    <section className="hero" id="home">
+      <div className="hero__topography" aria-hidden="true" />
+      <div className="hero__visual" aria-hidden="true">
+        <Image
+          src="/hero-jaguar.webp"
+          alt=""
+          fill
+          priority
+          sizes="(max-width: 820px) 100vw, 58vw"
+        />
+        <div className="hero__visual-fade" />
+        <div className="hero__coordinate-card">
+          <span>SEDE LOCAL</span>
+          <strong>{siteConfig.venue.coordinates}</strong>
+          <small>{siteConfig.venue.city}</small>
         </div>
       </div>
-      <div className="md:w-2/5 flex justify-center mb-8 md:mb-0">
-<Image
-  src="/hero.png"
-  alt="Promotional NASA Space Apps Challenge Atoyac 2025"
-  width={320}
-  height={240}
-  className="rounded-[20px] w-[320px] h-auto object-cover"
-/>
-      </div>
-    </div>
-  );
-};
 
-export default Hero;
+      <div className="hero__inner">
+        <div className="hero__copy">
+          <p className="hero__date">
+            {siteConfig.dateLabel} · {siteConfig.year}
+          </p>
+          <h1>
+            Space Apps
+            <span>Guerrero {siteConfig.year}</span>
+          </h1>
+          <div className="hero__rule" />
+          <h2>Ciencia, datos, innovación y comunidad para un mejor futuro.</h2>
+          <p className="hero__description">
+            Dos días para colaborar, crear y resolver retos con datos abiertos
+            en beneficio de Guerrero y del planeta.
+          </p>
+
+          <div className="hero__actions">
+            <Link className="button button--aqua" href={siteConfig.registrationHref}>
+              Regístrate ahora <span aria-hidden="true">→</span>
+            </Link>
+            <a className="button button--text" href="#features">
+              Conoce los retos <span className="button__circle">→</span>
+            </a>
+          </div>
+
+          <Countdown targetDate={siteConfig.eventDate} />
+        </div>
+      </div>
+
+      <div className="hero__wave hero__wave--one" aria-hidden="true" />
+      <div className="hero__wave hero__wave--two" aria-hidden="true" />
+      <div className="hero__microcopy">
+        <SectionIcon name="pin" size={18} />
+        {siteConfig.venue.city}
+      </div>
+    </section>
+  );
+}

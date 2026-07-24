@@ -1,17 +1,24 @@
+import type { Metadata } from "next";
 import "@/app/globals.css";
-import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "700"] });
-
-export const metadata = {
-  title: "NASA Space Apps Challenge",
-  description: "Official site for the 2025 NASA Space Apps Challenge in Mexico",
+export const metadata: Metadata = {
+  title: {
+    default: "Space Apps Guerrero 2026",
+    template: "%s | Space Apps Guerrero",
+  },
+  description:
+    "Encuentro local de ciencia, datos, innovación y comunidad en Guerrero.",
+  metadataBase: new URL("https://spaceapp-atoyac.vercel.app"),
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} bg-[#FFFCF6]`}>{children}</body>
+    <html lang="es">
+      <body>{children}</body>
     </html>
   );
 }

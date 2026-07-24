@@ -1,45 +1,65 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-interface FormData {
+export interface ContactFormData {
   fullname: string;
   email: string;
   phone: string;
   mensaje: string;
 }
 
-export const useForm = (initialState: FormData) => {
-  const [formData, setFormData] = useState<FormData>(initialState);
-  const [status, setStatus] = useState('');
+export function useForm(initialState: ContactFormData) {
+  const [formData, setFormData] = useState<ContactFormData>(initialState);
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("");
+    setIsSubmitting(true);
 
     try {
-      const res = await fetch('https://formspree.io/f/mvgkgazn', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("https://formspree.io/f/mvgkgazn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
-        setStatus('¡Mensaje enviado correctamente, te contestaremos a la brevedad posible!');
-        setFormData(initialState);
-      } else {
-        setStatus('Error al enviar el mensaje.');
+      if (!response.ok) {
+        throw new Error("No fue posible enviar el mensaje.");
       }
+
+      setStatus(
+        "Mensaje enviado correctamente. Te responderemos a la brevedad.",
+      );
+      setFormData(initialState);
     } catch (error) {
-      setStatus(`Error al enviar el mensaje: ${error instanceof Error ? error.message : ''}`);
+      setStatus(
+        error instanceof Error
+          ? error.message
+          : "Ocurrió un error al enviar el mensaje.",
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  return { formData, status, handleChange, handleSubmit };
-};
+  return {
+    formData,
+    status,
+    isSubmitting,
+    handleChange,
+    handleSubmit,
+  };
+}

@@ -1,12 +1,12 @@
 {
-  "name": "spaceapps2025",
-  "version": "0.1.0",
+  "name": "spaceapps-guerrero-2026",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",

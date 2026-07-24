@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Space Apps Guerrero 2026 — adaptación Next.js
 
-## Getting Started
+Adaptación del diseño del jaguar al proyecto `spaceappAtoyac` en Next.js 15.
 
-First, run the development server:
+## Incluye
+
+- Navbar responsive.
+- Hero con jaguar, mar, tierra y líneas topográficas.
+- Cuenta regresiva.
+- Sección `AboutRegisterSection`.
+- Sección `FeaturesSection`, con retos, agenda y sede.
+- Sección `SponsorsSection`.
+- Formulario de contacto conectado al mismo Formspree del proyecto original.
+- Footer.
+- Ruta `/convocatoria`.
+- Recursos optimizados en WebP.
+- Diseño responsive y soporte para `prefers-reduced-motion`.
+
+## Ejecutar
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Datos editables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Los textos principales, fecha, sede, enlaces y agenda están centralizados en:
 
-## Learn More
+```text
+src/data/site.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+Cambia ahí la fecha definitiva, la ubicación o la liga de registro.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Integración sobre el repositorio
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Puedes copiar todo este proyecto, o reemplazar en tu rama `dev`:
 
-## Deploy on Vercel
+```text
+src/app
+src/components
+src/hooks
+src/data
+public/hero-jaguar.webp
+public/venue.webp
+public/agave.webp
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Conservé los nombres de las secciones principales del repositorio:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `Navbar`
+- `Hero`
+- `AboutRegisterSection`
+- `FeaturesSection`
+- `SponsorsSection`
+- `ContactForm`
+- `Footer`
+- `Convocatoria`
