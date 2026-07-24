@@ -65,19 +65,19 @@ export default function Countdown({
 
   const units = [
     {
-      label: "Días",
+      label: " Días",
       value: timeRemaining.days,
     },
     {
-      label: "Horas",
+      label: " Horas",
       value: timeRemaining.hours,
     },
     {
-      label: "Minutos",
+      label: " Minutos",
       value: timeRemaining.minutes,
     },
     {
-      label: "Segundos",
+      label: " Segundos",
       value: timeRemaining.seconds,
     },
   ];
