@@ -1,5 +1,4 @@
 import Link from "next/link";
-import BrandMark from "@/components/BrandMark";
 import { siteConfig } from "@/data/site";
 
 export default function Footer() {
@@ -7,7 +6,6 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__message">
-          <BrandMark />
           <div>
             <h2>Tus ideas pueden transformar Guerrero.</h2>
             <p>

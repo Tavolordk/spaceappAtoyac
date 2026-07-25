@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Space Apps Guerrero",
   year: 2026,
-  dateLabel: "14 y 15 de noviembre de 2026",
+  dateLabel: "14 y 15 de noviembre",
   eventDate: "2026-11-14T09:00:00-06:00",
   venue: {
     name: "Escuela Preparatoria No. 23",
