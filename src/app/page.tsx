@@ -5,10 +5,11 @@ import FeaturesSection from "@/components/FeaturesSection";
 import SponsorsSection from "@/components/SponsorsSection";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
+import IntroVideoGate from "@/components/IntroVideoGate";
 
 export default function HomePage() {
   return (
-    <>
+    <IntroVideoGate>
       <Navbar />
       <main>
         <Hero />
@@ -18,6 +19,6 @@ export default function HomePage() {
         <ContactForm />
       </main>
       <Footer />
-    </>
+    </IntroVideoGate>
   );
 }
