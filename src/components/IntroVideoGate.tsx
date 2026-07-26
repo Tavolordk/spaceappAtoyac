@@ -16,7 +16,7 @@ type IntroPhase = "playing" | "leaving" | "finished";
  * 1.75 = 75% más rápido
  * 2 = doble de rápido
  */
-const VIDEO_PLAYBACK_RATE = 3;
+const VIDEO_PLAYBACK_RATE = 10;
 const EXIT_ANIMATION_MS = 250;
 const SAFETY_TIMEOUT_MS = 5_000;
 
