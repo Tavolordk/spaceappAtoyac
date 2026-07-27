@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="hero__topography" aria-hidden="true" />
       <div className="hero__visual" aria-hidden="true">
         <Image
-          src="/hero-jaguar.webp"
+          src="/hero-jaguar-opt.webp"
           alt=""
           fill
           priority

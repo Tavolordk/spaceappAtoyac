@@ -3,11 +3,11 @@ import Image from "next/image";
 const sponsors = [
   {
     name: "Universidad Autónoma de Guerrero",
-    logo: "/uagro.png",
+    logo: "/uagro.webp",
   },
   {
     name: "ATEX IT Solutions",
-    logo: "/atex it.png",
+    logo: "/atex-it.webp",
   },
 ];
 

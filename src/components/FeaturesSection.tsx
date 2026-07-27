@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import SectionIcon from "@/components/SectionIcon";
 import { agenda, challenges, siteConfig } from "@/data/site";
@@ -10,7 +9,9 @@ export default function FeaturesSection() {
         <div className="section__inner challenges__layout">
           <div className="challenges__intro">
             <p className="eyebrow">Retos {siteConfig.year}</p>
-            <h2>Del mar a la montaña: problemas reales, soluciones abiertas.</h2>
+            <h2>
+              Del mar a la montaña: problemas reales, soluciones abiertas.
+            </h2>
             <p>
               Explora los desafíos, encuentra el que más te inspire y forma un
               equipo con perfiles complementarios.
@@ -92,15 +93,6 @@ export default function FeaturesSection() {
             >
               Cómo llegar <span>→</span>
             </a>
-          </div>
-
-          <div className="venue-panel__image">
-            <Image
-              src="/venue.webp"
-              alt="Vista representativa de la sede del evento"
-              fill
-              sizes="(max-width: 820px) 100vw, 48vw"
-            />
           </div>
         </div>
       </section>

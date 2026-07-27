@@ -53,6 +53,34 @@
   }
 }
 
+.skipButton {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(3, 31, 53, 0.45);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.skipButton:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(3, 31, 53, 0.7);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pageContent,
   .intro {
