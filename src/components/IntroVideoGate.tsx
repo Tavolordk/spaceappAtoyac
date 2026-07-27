@@ -106,6 +106,7 @@ export default function IntroVideoGate({
           aria-label="Animación de introducción de NASA Space Apps Guerrero"
         >
 <video
+  suppressHydrationWarning={true}
   className={styles.video}
   src="/genera_esta_imagen_empezando_c.mp4"
   autoPlay
@@ -117,6 +118,10 @@ export default function IntroVideoGate({
 
     video.defaultPlaybackRate = VIDEO_PLAYBACK_RATE;
     video.playbackRate = VIDEO_PLAYBACK_RATE;
+
+    void video.play().catch(() => {
+      // El navegador puede bloquear temporalmente el autoplay.
+    });
   }}
   onCanPlay={(event) => {
     event.currentTarget.playbackRate = VIDEO_PLAYBACK_RATE;

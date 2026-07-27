@@ -17,11 +17,6 @@ export default function Hero() {
           sizes="(max-width: 820px) 100vw, 58vw"
         />
         <div className="hero__visual-fade" />
-        <div className="hero__coordinate-card">
-          <span>SEDE LOCAL</span>
-          <strong>{siteConfig.venue.coordinates}</strong>
-          <small>{siteConfig.venue.city}</small>
-        </div>
       </div>
 
       <div className="hero__inner">

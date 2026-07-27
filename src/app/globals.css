@@ -328,36 +328,7 @@ img {
     linear-gradient(180deg, rgba(3, 31, 53, 0.2), transparent 68%);
 }
 
-.hero__coordinate-card {
-  position: absolute;
-  top: 9.5rem;
-  right: clamp(1rem, 4vw, 4rem);
-  display: grid;
-  width: 12.5rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  background: rgba(3, 31, 53, 0.9);
-  backdrop-filter: blur(9px);
-}
 
-.hero__coordinate-card span {
-  color: var(--clay-300);
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-}
-
-.hero__coordinate-card strong {
-  margin-top: 0.45rem;
-  font-size: 0.8rem;
-}
-
-.hero__coordinate-card small {
-  margin-top: 0.35rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.68rem;
-}
 
 .hero__inner {
   width: min(1420px, 100%);
@@ -580,10 +551,14 @@ img {
 
 .mission-card {
   min-height: 16rem;
-  padding: 1.5rem;
   color: var(--navy-800);
   border-left: 1px solid var(--line);
   text-align: center;
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .mission-card h3 {
@@ -636,6 +611,8 @@ img {
   min-height: 21rem;
   padding: 1.4rem;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   border-radius: 0.75rem;
   overflow: hidden;
   transition:
@@ -1390,10 +1367,6 @@ img {
 
   .hero__visual-fade {
     background: linear-gradient(180deg, var(--navy-950) 0%, transparent 36%);
-  }
-
-  .hero__coordinate-card {
-    display: none;
   }
 
   .hero__microcopy {
