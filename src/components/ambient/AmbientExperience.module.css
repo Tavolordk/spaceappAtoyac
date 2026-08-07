@@ -1,0 +1,431 @@
+.ambientRoot {
+  position: fixed;
+  z-index: 18;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint style;
+}
+
+.fireworks {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.dancers {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+}
+
+.dancerStage {
+  position: absolute;
+  bottom: -1rem;
+  width: clamp(8.75rem, 14vw, 13rem);
+  aspect-ratio: 778 / 1024;
+  opacity: 0;
+  filter:
+    drop-shadow(0 15px 18px rgba(6, 25, 45, 0.24))
+    drop-shadow(0 0 18px rgba(255, 202, 112, 0.12));
+  transition:
+    opacity 320ms ease,
+    transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.dancerStageLeft {
+  left: clamp(-3.1rem, -1.7vw, -1rem);
+  transform: translate3d(-118%, 26px, 0) rotate(-6deg) scale(0.92);
+}
+
+.dancerStageRight {
+  right: clamp(-3.1rem, -1.7vw, -1rem);
+  transform: translate3d(118%, 26px, 0) rotate(6deg) scale(0.92);
+}
+
+.dancersVisible .dancerStage {
+  opacity: 0.97;
+}
+
+.dancersVisible .dancerStageLeft {
+  transform: translate3d(0, 0, 0) rotate(-1.6deg) scale(1);
+  animation: leftDanceFloat 1.05s ease-in-out 0.65s 2 alternate;
+}
+
+.dancersVisible .dancerStageRight {
+  transform: translate3d(0, 0, 0) rotate(1.6deg) scale(1);
+  animation: rightDanceFloat 1.05s ease-in-out 0.78s 2 alternate;
+}
+
+.dancerFrame {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  object-position: center bottom;
+  opacity: 0;
+  transform: translateZ(0) scale(0.996);
+  transition: opacity 68ms linear;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.dancerFrameActive {
+  opacity: 1;
+  transform: translateZ(0) scale(1);
+}
+
+.skyRocket {
+  position: absolute;
+  bottom: 6.8rem;
+  width: 1.15rem;
+  height: 9.5rem;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.skyRocketLeft {
+  left: clamp(5rem, 12vw, 13rem);
+}
+
+.skyRocketRight {
+  right: clamp(5rem, 12vw, 13rem);
+}
+
+.skyRocketTrail {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0.28rem;
+  height: 100%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(to top, rgba(255, 195, 104, 0), rgba(255, 195, 104, 0.45) 20%, rgba(255, 233, 174, 0.78) 55%, rgba(160, 218, 255, 0.95) 100%);
+  filter: blur(0.35px);
+  opacity: 0;
+}
+
+.skyRocketHead {
+  position: absolute;
+  left: 50%;
+  top: -0.2rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.98) 0 28%, rgba(255, 240, 177, 0.95) 28% 50%, rgba(142, 204, 255, 0.86) 50% 72%, rgba(210, 162, 255, 0.18) 72% 100%);
+  box-shadow:
+    0 0 10px rgba(255, 236, 180, 0.7),
+    0 0 18px rgba(132, 203, 255, 0.45);
+  opacity: 0;
+}
+
+.skyRocketActive {
+  opacity: 1;
+  animation: rocketLaunch 440ms cubic-bezier(0.18, 0.72, 0.2, 1) forwards;
+}
+
+.skyRocketActive .skyRocketTrail {
+  animation: rocketTrail 440ms linear forwards;
+}
+
+.skyRocketActive .skyRocketHead {
+  animation: rocketHead 440ms ease-out forwards;
+}
+
+.burst {
+  position: absolute;
+  top: 18vh;
+  width: clamp(5.8rem, 9vw, 8rem);
+  aspect-ratio: 1;
+  opacity: 0;
+  transform: scale(0.2);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255, 245, 204, 0.95) 0 8%, rgba(255, 214, 120, 0.72) 8% 16%, rgba(255, 127, 80, 0.45) 16% 24%, rgba(180, 120, 255, 0.28) 24% 36%, rgba(120, 200, 255, 0.18) 36% 52%, rgba(255, 255, 255, 0) 52% 100%);
+  filter: blur(0.3px);
+  transition: opacity 120ms ease;
+}
+
+.burst::before,
+.burst::after {
+  content: "";
+  position: absolute;
+  inset: -24%;
+  border-radius: inherit;
+  background:
+    conic-gradient(from 0deg,
+      rgba(255, 236, 170, 0) 0 4%,
+      rgba(255, 236, 170, 0.96) 4% 6%,
+      rgba(255, 236, 170, 0) 6% 12%,
+      rgba(255, 121, 85, 0.7) 12% 14%,
+      rgba(255, 121, 85, 0) 14% 20%,
+      rgba(133, 201, 255, 0.72) 20% 22%,
+      rgba(133, 201, 255, 0) 22% 28%,
+      rgba(199, 150, 255, 0.7) 28% 30%,
+      rgba(199, 150, 255, 0) 30% 36%,
+      rgba(255, 236, 170, 0.92) 36% 38%,
+      rgba(255, 236, 170, 0) 38% 44%,
+      rgba(255, 140, 94, 0.7) 44% 46%,
+      rgba(255, 140, 94, 0) 46% 52%,
+      rgba(116, 191, 255, 0.72) 52% 54%,
+      rgba(116, 191, 255, 0) 54% 60%,
+      rgba(212, 165, 255, 0.7) 60% 62%,
+      rgba(212, 165, 255, 0) 62% 68%,
+      rgba(255, 236, 170, 0.9) 68% 70%,
+      rgba(255, 236, 170, 0) 70% 76%,
+      rgba(255, 156, 110, 0.7) 76% 78%,
+      rgba(255, 156, 110, 0) 78% 84%,
+      rgba(129, 207, 255, 0.72) 84% 86%,
+      rgba(129, 207, 255, 0) 86% 92%,
+      rgba(220, 176, 255, 0.7) 92% 94%,
+      rgba(220, 176, 255, 0) 94% 100%);
+  mask: radial-gradient(circle, transparent 0 46%, black 46% 51%, transparent 51% 100%);
+}
+
+.burst::after {
+  inset: -42%;
+  opacity: 0.75;
+  transform: rotate(14deg);
+}
+
+.burstLeft {
+  left: clamp(3.4rem, 11vw, 11.6rem);
+}
+
+.burstRight {
+  right: clamp(3.4rem, 11vw, 11.6rem);
+}
+
+.burstVisible {
+  opacity: 0.98;
+  animation: burstPop 640ms ease-out both;
+}
+
+@keyframes leftDanceFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-1.6deg) scale(1);
+  }
+  45% {
+    transform: translate3d(8px, -8px, 0) rotate(1.4deg) scale(1.018);
+  }
+  100% {
+    transform: translate3d(15px, -1px, 0) rotate(-0.6deg) scale(1);
+  }
+}
+
+@keyframes rightDanceFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(1.6deg) scale(1);
+  }
+  45% {
+    transform: translate3d(-8px, -8px, 0) rotate(-1.4deg) scale(1.018);
+  }
+  100% {
+    transform: translate3d(-15px, -1px, 0) rotate(0.6deg) scale(1);
+  }
+}
+
+@keyframes rocketLaunch {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 1.6rem, 0) scale(0.78);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -15rem, 0) scale(1.05);
+  }
+}
+
+@keyframes rocketTrail {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(0.2);
+    transform-origin: bottom;
+  }
+  18% {
+    opacity: 0.85;
+  }
+  72% {
+    opacity: 0.95;
+    transform: translateX(-50%) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scaleY(0.2);
+  }
+}
+
+@keyframes rocketHead {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.6);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(1.06);
+  }
+}
+
+@keyframes burstPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.18);
+  }
+  24% {
+    opacity: 1;
+    transform: scale(0.82);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.14);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.42);
+  }
+}
+
+@media (max-width: 1100px) {
+  .dancerStage {
+    width: clamp(7.7rem, 15vw, 10.6rem);
+  }
+
+  .skyRocket {
+    bottom: 5.9rem;
+    height: 8rem;
+  }
+
+  .burst {
+    width: clamp(4.7rem, 8vw, 6rem);
+  }
+}
+
+@media (max-width: 900px) {
+  .ambientRoot {
+    z-index: 12;
+  }
+
+  .dancerStage {
+    bottom: -0.65rem;
+    width: clamp(6.1rem, 17vw, 8rem);
+  }
+
+  .dancerStageLeft {
+    left: -1.9rem;
+  }
+
+  .dancerStageRight {
+    right: -1.9rem;
+  }
+
+  .skyRocket {
+    bottom: 4.6rem;
+    height: 6.6rem;
+  }
+
+  .skyRocketLeft {
+    left: 2.6rem;
+  }
+
+  .skyRocketRight {
+    right: 2.6rem;
+  }
+
+  .burst {
+    width: clamp(3.8rem, 9vw, 5rem);
+    top: 16vh;
+  }
+
+  .burstLeft {
+    left: 1.8rem;
+  }
+
+  .burstRight {
+    right: 1.8rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .dancerStage {
+    bottom: -0.4rem;
+    width: 5.55rem;
+  }
+
+  .dancerStageLeft {
+    left: -1.5rem;
+  }
+
+  .dancerStageRight {
+    right: -1.5rem;
+  }
+
+  .skyRocket {
+    bottom: 3.8rem;
+    height: 5.1rem;
+    width: 0.95rem;
+  }
+
+  .skyRocketLeft {
+    left: 1.65rem;
+  }
+
+  .skyRocketRight {
+    right: 1.65rem;
+  }
+
+  .skyRocketTrail {
+    width: 0.22rem;
+  }
+
+  .skyRocketHead {
+    width: 0.78rem;
+    height: 0.78rem;
+  }
+
+  .burst {
+    width: 3.2rem;
+    top: 14vh;
+  }
+
+  .burstLeft {
+    left: 0.95rem;
+  }
+
+  .burstRight {
+    right: 0.95rem;
+  }
+
+  .fireworks {
+    opacity: 0.72;
+  }
+
+  .dancersVisible .dancerStage {
+    opacity: 0.88;
+  }
+}
+
+@media (max-width: 390px) {
+  .dancerStage {
+    width: 4.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambientRoot {
+    display: none;
+  }
+}

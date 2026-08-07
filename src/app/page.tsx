@@ -6,6 +6,7 @@ import SponsorsSection from "@/components/SponsorsSection";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import IntroVideoGate from "@/components/IntroVideoGate";
+import AmbientExperience from "@/components/ambient/AmbientExperience";
 import styles from "./CosmicGuerreroTheme.module.css";
 
 export default function HomePage() {
@@ -13,6 +14,7 @@ export default function HomePage() {
     <IntroVideoGate>
       <div className={styles.theme}>
         <Navbar />
+        <AmbientExperience />
         <main>
           <Hero />
           <AboutRegisterSection />
