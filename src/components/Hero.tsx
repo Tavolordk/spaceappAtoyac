@@ -1,58 +1,84 @@
 import Image from "next/image";
 import Link from "next/link";
 import Countdown from "@/components/Countdown";
-import SectionIcon from "@/components/SectionIcon";
+import BrandMark from "@/components/BrandMark";
 import { siteConfig } from "@/data/site";
+import styles from "./HeroCosmic.module.css";
 
 export default function Hero() {
   return (
-    <section className="hero" id="home">
-      <div className="hero__topography" aria-hidden="true" />
-      <div className="hero__visual" aria-hidden="true">
-        <Image
-          src="/hero-jaguar-opt.webp"
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 820px) 100vw, 58vw"
-        />
-        <div className="hero__visual-fade" />
-      </div>
+    <section className={styles.hero} id="home">
+      <div className={styles.stars} aria-hidden="true" />
+      <div className={styles.orbit} aria-hidden="true" />
+      <div className={styles.papelTop} aria-hidden="true" />
 
-      <div className="hero__inner">
-        <div className="hero__copy">
-          <p className="hero__date">
-            {siteConfig.dateLabel} · {siteConfig.year}
-          </p>
+      <div className={styles.inner}>
+        <div className={styles.copy}>
+          <div className={styles.brandLockup} aria-label="NASA Space Apps Challenge Guerrero">
+            <BrandMark />
+            <div>
+              <span>NASA</span>
+              <strong>SPACE APPS</strong>
+              <small>CHALLENGE · GUERRERO</small>
+            </div>
+          </div>
+
+          <p className={styles.kicker}>{siteConfig.dateLabel} · {siteConfig.year}</p>
+
           <h1>
-            Space Apps
-            <span>Guerrero {siteConfig.year}</span>
+            El cosmos también
+            <span>se mira desde Guerrero.</span>
           </h1>
-          <div className="hero__rule" />
-          <h2>Ciencia, datos, innovación y comunidad para un mejor futuro.</h2>
-          <p className="hero__description">
-            Dos días para colaborar, crear y resolver retos con datos abiertos
-            en beneficio de Guerrero y del planeta.
+
+          <p className={styles.lead}>
+            Ciencia, datos abiertos y creatividad con una identidad nacida entre
+            la costa, el folclor y las estrellas.
           </p>
 
-          <div className="hero__actions">
-            <Link className="button button--aqua" href={siteConfig.registrationHref}>
+          <div className={styles.actions}>
+            <Link className={styles.primaryButton} href={siteConfig.registrationHref}>
               Regístrate ahora <span aria-hidden="true">→</span>
             </Link>
-            <a className="button button--text" href="#features">
-              Conoce los retos <span className="button__circle">→</span>
+            <a className={styles.secondaryButton} href="#features">
+              Explorar retos
             </a>
           </div>
 
-          <Countdown targetDate={siteConfig.eventDate} />
+          <div className={styles.countdownWrap}>
+            <span className={styles.countdownLabel}>Cuenta regresiva al hackathon</span>
+            <Countdown targetDate={siteConfig.eventDate} />
+          </div>
+
+          <div className={styles.placeLine}>
+            <span>GUERRERO · MÉXICO</span>
+            <i aria-hidden="true" />
+            <span>{siteConfig.venue.city}</span>
+          </div>
+        </div>
+
+        <div className={styles.visual}>
+          <div className={styles.visualGlow} aria-hidden="true" />
+          <div className={styles.posterFrame}>
+            <Image
+              src="/guerrero-cosmic-folklore.png"
+              alt="Folclor de Guerrero integrado con la costa y un paisaje cósmico"
+              fill
+              priority
+              sizes="(max-width: 900px) 92vw, 46vw"
+              className={styles.posterImage}
+            />
+            <div className={styles.posterFade} aria-hidden="true" />
+          </div>
+
+          <div className={styles.folkloreTag}>FOLCLOR · COSTA · CIENCIA</div>
+          <div className={styles.yearStamp}>{siteConfig.year}</div>
         </div>
       </div>
 
-      <div className="hero__wave hero__wave--one" aria-hidden="true" />
-      <div className="hero__wave hero__wave--two" aria-hidden="true" />
-      <div className="hero__microcopy">
-        <SectionIcon name="pin" size={18} />
-        {siteConfig.venue.city}
+      <div className={styles.coastline} aria-hidden="true">
+        <span />
+        <span />
+        <span />
       </div>
     </section>
   );

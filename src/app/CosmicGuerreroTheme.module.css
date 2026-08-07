@@ -1,0 +1,350 @@
+.theme {
+  --cosmic-night: #07162f;
+  --cosmic-deep: #041126;
+  --cosmic-cream: #fff3d1;
+  --cosmic-aqua: #23d2ce;
+  --cosmic-magenta: #f43ba8;
+  --cosmic-coral: #ff4b45;
+  --cosmic-sun: #ffb323;
+  --cosmic-green: #56d47b;
+  min-height: 100vh;
+  color: var(--cosmic-cream);
+  background: var(--cosmic-night);
+}
+
+.theme :global(.site-nav) {
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(4,17,38,.72);
+  box-shadow: 0 18px 50px rgba(0,0,0,.16);
+  backdrop-filter: blur(18px) saturate(1.2);
+}
+
+.theme :global(.site-nav--compact) {
+  background: rgba(4,17,38,.9);
+}
+
+.theme :global(.site-brand),
+.theme :global(.site-nav__desktop a),
+.theme :global(.site-nav__mobile a) {
+  color: var(--cosmic-cream);
+}
+
+.theme :global(.site-brand small) {
+  color: var(--cosmic-aqua);
+}
+
+.theme :global(.site-nav__desktop a:hover) {
+  color: var(--cosmic-sun);
+}
+
+.theme :global(.site-nav__cta) {
+  color: #07162f;
+  background: linear-gradient(90deg, var(--cosmic-sun), #ff7b59);
+  box-shadow: 0 12px 28px rgba(255,123,89,.22);
+}
+
+.theme :global(main) {
+  overflow: clip;
+  background:
+    radial-gradient(circle at 7% 28%, rgba(244,59,168,.08), transparent 18%),
+    radial-gradient(circle at 92% 50%, rgba(35,210,206,.08), transparent 20%),
+    var(--cosmic-night);
+}
+
+.theme :global(.section) {
+  isolation: isolate;
+}
+
+.theme :global(.mission),
+.theme :global(.challenges),
+.theme :global(.sponsors),
+.theme :global(.contact) {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme :global(.mission)::before,
+.theme :global(.challenges)::before,
+.theme :global(.sponsors)::before,
+.theme :global(.contact)::before {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 10px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cosmic-aqua) 0 58px,
+    var(--cosmic-magenta) 58px 116px,
+    var(--cosmic-sun) 116px 174px,
+    var(--cosmic-green) 174px 232px,
+    #7b6cff 232px 290px,
+    var(--cosmic-coral) 290px 348px
+  );
+  content: "";
+}
+
+.theme :global(.mission) {
+  color: var(--cosmic-cream);
+  background:
+    radial-gradient(circle at 16% 12%, rgba(255,179,35,.18), transparent 25%),
+    radial-gradient(circle at 88% 76%, rgba(35,210,206,.16), transparent 30%),
+    linear-gradient(145deg, #0b2144 0%, #081933 54%, #0d2444 100%);
+}
+
+.theme :global(.mission)::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .15;
+  background-image: radial-gradient(circle, #fff 0 1px, transparent 1.5px);
+  background-size: 74px 74px;
+  content: "";
+}
+
+.theme :global(.mission__intro h2),
+.theme :global(.challenges__intro h2),
+.theme :global(.schedule-panel h2),
+.theme :global(.venue-panel h2),
+.theme :global(.contact h2) {
+  color: var(--cosmic-cream);
+  font-family: var(--sans, Arial, sans-serif);
+  font-weight: 850;
+  letter-spacing: -.045em;
+}
+
+.theme :global(.mission__intro > p:not(.eyebrow)),
+.theme :global(.challenges__intro > p:not(.eyebrow)) {
+  color: rgba(255,243,209,.7);
+}
+
+.theme :global(.eyebrow) {
+  color: var(--cosmic-sun);
+  font-family: var(--sans, Arial, sans-serif);
+  font-size: .78rem;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.theme :global(.eyebrow)::after {
+  width: 56px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cosmic-magenta), var(--cosmic-aqua));
+}
+
+.theme :global(.mission__items) {
+  gap: 1rem;
+}
+
+.theme :global(.mission-card) {
+  min-height: 17rem;
+  padding: 1.7rem 1.25rem;
+  color: var(--cosmic-cream);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+
+.theme :global(.mission-card:nth-child(1)) { box-shadow: inset 0 4px 0 var(--cosmic-aqua), 0 18px 55px rgba(0,0,0,.18); }
+.theme :global(.mission-card:nth-child(2)) { box-shadow: inset 0 4px 0 var(--cosmic-magenta), 0 18px 55px rgba(0,0,0,.18); }
+.theme :global(.mission-card:nth-child(3)) { box-shadow: inset 0 4px 0 var(--cosmic-sun), 0 18px 55px rgba(0,0,0,.18); }
+.theme :global(.mission-card:nth-child(4)) { box-shadow: inset 0 4px 0 var(--cosmic-green), 0 18px 55px rgba(0,0,0,.18); }
+
+.theme :global(.mission-card h3) {
+  color: #fff6dd;
+  font-family: var(--sans, Arial, sans-serif);
+  font-weight: 800;
+}
+
+.theme :global(.mission-card p) {
+  color: rgba(255,243,209,.68);
+}
+
+.theme :global(.mission-card svg) {
+  color: var(--cosmic-aqua);
+}
+
+.theme :global(.challenges) {
+  color: var(--cosmic-cream);
+  background:
+    linear-gradient(90deg, rgba(255,75,69,.06), transparent 25%, transparent 75%, rgba(35,210,206,.07)),
+    #07162f;
+}
+
+.theme :global(.challenge-grid) {
+  gap: 1rem;
+}
+
+.theme :global(.challenge-card) {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 26px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.22);
+}
+
+.theme :global(.challenge-card--ocean) {
+  color: #051729;
+  background: linear-gradient(145deg, #41eadf, #2eb9cc);
+}
+
+.theme :global(.challenge-card--sand) {
+  color: #261205;
+  background: linear-gradient(145deg, #ffd15a, #ff9c48);
+}
+
+.theme :global(.challenge-card--water) {
+  color: #17122d;
+  background: linear-gradient(145deg, #b7a0ff, #ef74c9);
+}
+
+.theme :global(.challenge-card--clay) {
+  color: #fff8e8;
+  background: linear-gradient(145deg, #ff594e, #c92f71);
+}
+
+.theme :global(.challenge-card h3) {
+  font-family: var(--sans, Arial, sans-serif);
+  font-weight: 900;
+  letter-spacing: -.025em;
+}
+
+.theme :global(.inline-link) {
+  color: var(--cosmic-sun);
+  font-weight: 900;
+}
+
+.theme :global(.schedule-venue) {
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.theme :global(.schedule-panel) {
+  color: var(--cosmic-cream);
+  background:
+    radial-gradient(circle at 10% 85%, rgba(244,59,168,.23), transparent 30%),
+    radial-gradient(circle at 82% 13%, rgba(35,210,206,.15), transparent 28%),
+    linear-gradient(145deg, #171b4e, #07162f);
+}
+
+.theme :global(.agenda-day__label) {
+  color: var(--cosmic-aqua);
+}
+
+.theme :global(.agenda-day__entries) {
+  border-left-color: rgba(255,255,255,.18);
+}
+
+.theme :global(.agenda-day__entries time) {
+  color: var(--cosmic-sun);
+}
+
+.theme :global(.venue-panel) {
+  color: #fff8e8;
+  background:
+    radial-gradient(circle at 75% 30%, rgba(255,215,93,.22), transparent 28%),
+    linear-gradient(145deg, #b72f58, #e95743 58%, #f29346 120%);
+}
+
+.theme :global(.venue-panel)::after {
+  opacity: .2;
+  background: repeating-radial-gradient(ellipse at 78% 50%, transparent 0 17px, rgba(255,255,255,.45) 18px 19px, transparent 20px 38px);
+}
+
+.theme :global(.venue-panel__location span),
+.theme :global(.venue-panel__copy > p:not(.eyebrow)) {
+  color: rgba(255,248,232,.76);
+}
+
+.theme :global(.venue-panel .eyebrow) {
+  color: #0b2144;
+}
+
+.theme :global(.sponsors) {
+  color: #0c2140;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(35,210,206,.16), transparent 24%),
+    radial-gradient(circle at 88% 74%, rgba(244,59,168,.14), transparent 22%),
+    #fff0d0;
+}
+
+.theme :global(.sponsors .eyebrow) {
+  color: #d23772;
+}
+
+.theme :global(.sponsors__heading > p:last-child) {
+  color: rgba(12,33,64,.68);
+}
+
+.theme :global(.sponsors__logos) {
+  overflow: hidden;
+  border: 1px solid rgba(12,33,64,.15);
+  border-radius: 24px;
+  background: rgba(255,255,255,.38);
+}
+
+.theme :global(.sponsor-logo) {
+  border-right-color: rgba(12,33,64,.12);
+}
+
+.theme :global(.contact) {
+  color: var(--cosmic-cream);
+  background:
+    radial-gradient(circle at 15% 25%, rgba(244,59,168,.23), transparent 28%),
+    radial-gradient(circle at 90% 78%, rgba(35,210,206,.18), transparent 25%),
+    linear-gradient(145deg, #07162f, #151946);
+}
+
+.theme :global(.contact__intro > p:not(.eyebrow)) {
+  color: rgba(255,243,209,.7);
+}
+
+.theme :global(.contact__social) {
+  color: var(--cosmic-aqua);
+}
+
+.theme :global(.contact-form input),
+.theme :global(.contact-form textarea) {
+  padding: .9rem 1rem;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+}
+
+.theme :global(.contact-form input:focus),
+.theme :global(.contact-form textarea:focus) {
+  outline: 2px solid var(--cosmic-aqua);
+  outline-offset: 1px;
+}
+
+.theme :global(footer),
+.theme :global(.footer),
+.theme :global(.site-footer) {
+  color: rgba(255,243,209,.75);
+  border-top: 1px solid rgba(255,255,255,.1);
+  background: #041126;
+}
+
+@media (max-width: 900px) {
+  .theme :global(.mission__items),
+  .theme :global(.challenge-grid) {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .theme :global(.mission__items),
+  .theme :global(.challenge-grid) {
+    grid-template-columns: 1fr;
+  }
+
+  .theme :global(.mission-card),
+  .theme :global(.challenge-card) {
+    min-height: auto;
+  }
+}

@@ -6,19 +6,22 @@ import SponsorsSection from "@/components/SponsorsSection";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import IntroVideoGate from "@/components/IntroVideoGate";
+import styles from "./CosmicGuerreroTheme.module.css";
 
 export default function HomePage() {
   return (
     <IntroVideoGate>
-      <Navbar />
-      <main>
-        <Hero />
-        <AboutRegisterSection />
-        <FeaturesSection />
-        <SponsorsSection />
-        <ContactForm />
-      </main>
-      <Footer />
+      <div className={styles.theme}>
+        <Navbar />
+        <main>
+          <Hero />
+          <AboutRegisterSection />
+          <FeaturesSection />
+          <SponsorsSection />
+          <ContactForm />
+        </main>
+        <Footer />
+      </div>
     </IntroVideoGate>
   );
 }
