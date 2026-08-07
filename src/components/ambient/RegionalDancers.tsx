@@ -60,7 +60,7 @@ function SideDancer({ frames, activeFrame, className }: SideDancerProps) {
 
 export default function RegionalDancers() {
   const [visible, setVisible] = useState(false);
-  const [frame, setFrame] = useState(FRAME_SEQUENCE[0]);
+  const [frame, setFrame] = useState<number>(FRAME_SEQUENCE[0]);
   const [burstActive, setBurstActive] = useState(false);
   const [rocketActive, setRocketActive] = useState(false);
   const hideTimer = useRef<number | null>(null);
@@ -75,10 +75,14 @@ export default function RegionalDancers() {
   );
 
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (reduceMotion) return;
 
-    const sections = Array.from(document.querySelectorAll("main section, main [id]"));
+    const sections = Array.from(
+      document.querySelectorAll("main section, main [id]"),
+    );
     if (sections.length === 0) return;
 
     const clearMotionTimers = () => {
@@ -107,7 +111,8 @@ export default function RegionalDancers() {
 
     const startSequence = () => {
       const now = Date.now();
-      if (playingRef.current || now - lastShowAt.current < REAPPEAR_COOLDOWN_MS) return;
+      if (playingRef.current || now - lastShowAt.current < REAPPEAR_COOLDOWN_MS)
+        return;
       playingRef.current = true;
       lastShowAt.current = now;
 
@@ -145,7 +150,11 @@ export default function RegionalDancers() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting && entry.intersectionRatio > 0.22)) {
+        if (
+          entries.some(
+            (entry) => entry.isIntersecting && entry.intersectionRatio > 0.22,
+          )
+        ) {
           startSequence();
         }
       },
@@ -164,18 +173,30 @@ export default function RegionalDancers() {
   }, [totalDuration]);
 
   return (
-    <div className={`${styles.dancers} ${visible ? styles.dancersVisible : ""}`}>
-      <div className={`${styles.skyRocket} ${styles.skyRocketLeft} ${rocketActive ? styles.skyRocketActive : ""}`} aria-hidden="true">
+    <div
+      className={`${styles.dancers} ${visible ? styles.dancersVisible : ""}`}
+    >
+      <div
+        className={`${styles.skyRocket} ${styles.skyRocketLeft} ${rocketActive ? styles.skyRocketActive : ""}`}
+        aria-hidden="true"
+      >
         <span className={styles.skyRocketTrail} />
         <span className={styles.skyRocketHead} />
       </div>
-      <div className={`${styles.skyRocket} ${styles.skyRocketRight} ${rocketActive ? styles.skyRocketActive : ""}`} aria-hidden="true">
+      <div
+        className={`${styles.skyRocket} ${styles.skyRocketRight} ${rocketActive ? styles.skyRocketActive : ""}`}
+        aria-hidden="true"
+      >
         <span className={styles.skyRocketTrail} />
         <span className={styles.skyRocketHead} />
       </div>
 
-      <div className={`${styles.burst} ${styles.burstLeft} ${burstActive ? styles.burstVisible : ""}`} />
-      <div className={`${styles.burst} ${styles.burstRight} ${burstActive ? styles.burstVisible : ""}`} />
+      <div
+        className={`${styles.burst} ${styles.burstLeft} ${burstActive ? styles.burstVisible : ""}`}
+      />
+      <div
+        className={`${styles.burst} ${styles.burstRight} ${burstActive ? styles.burstVisible : ""}`}
+      />
 
       <SideDancer
         frames={LEFT_FRAMES}
