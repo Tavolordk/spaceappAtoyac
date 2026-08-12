@@ -7,7 +7,7 @@ type IntroVideoGateProps = {
   children: ReactNode;
 };
 
-type IntroPhase = "playing" | "leaving" | "finished";
+type IntroPhase = "loading" | "playing" | "leaving" | "finished";
 
 const FRAMES = [
   "/intro-frames/frame-01.webp",
@@ -23,8 +23,59 @@ const FRAMES = [
 const FRAME_DURATION_MS = 180;
 const FINAL_HOLD_MS = 420;
 const EXIT_ANIMATION_MS = 300;
-const SAFETY_TIMEOUT_MS = 5_000;
+const SAFETY_TIMEOUT_MS = 12_000;
 const STORAGE_KEY = "sag-intro-seen";
+
+function preloadFrame(src: string): Promise<void> {
+  return new Promise((resolve) => {
+    const image = new window.Image();
+    let settled = false;
+
+    const finish = async () => {
+      if (settled) {
+        return;
+      }
+
+      settled = true;
+
+      try {
+        // Espera también a que el navegador decodifique la imagen.
+        // Así evitamos que el primer recorrido salte frames aunque el archivo
+        // ya haya terminado de descargarse.
+        await image.decode();
+      } catch {
+        // onload ya confirma que el recurso está disponible; algunos
+        // navegadores pueden rechazar decode() aun cuando pueden pintarlo.
+      }
+
+      resolve();
+    };
+
+    image.onload = () => {
+      void finish();
+    };
+
+    // No bloqueamos toda la página por un frame corrupto o una respuesta
+    // temporalmente fallida. El timeout de seguridad sigue siendo el último
+    // respaldo de la intro.
+    image.onerror = () => {
+      if (!settled) {
+        settled = true;
+        resolve();
+      }
+    };
+
+    image.src = src;
+
+    if (image.complete && image.naturalWidth > 0) {
+      void finish();
+    }
+  });
+}
+
+async function preloadFrames(): Promise<void> {
+  await Promise.all(FRAMES.map((src) => preloadFrame(src)));
+}
 
 export default function IntroVideoGate({ children }: IntroVideoGateProps) {
   const [phase, setPhase] = useState<IntroPhase>("finished");
@@ -33,36 +84,67 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
 
   const phaseRef = useRef<IntroPhase>("finished");
   const originalBodyOverflowRef = useRef("");
+  const bodyLockedRef = useRef(false);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const safetyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const finishIntro = useCallback(() => {
-    if (phaseRef.current !== "playing") {
+  const unlockBody = useCallback(() => {
+    if (!bodyLockedRef.current) {
       return;
     }
 
-    phaseRef.current = "leaving";
-    setPhase("leaving");
-
-    exitTimerRef.current = setTimeout(() => {
-      phaseRef.current = "finished";
-      setPhase("finished");
-    }, EXIT_ANIMATION_MS);
+    document.body.style.overflow = originalBodyOverflowRef.current;
+    bodyLockedRef.current = false;
   }, []);
+
+  const leaveIntro = useCallback(
+    (rememberAsSeen: boolean) => {
+      if (
+        phaseRef.current === "finished" ||
+        phaseRef.current === "leaving"
+      ) {
+        return;
+      }
+
+      if (rememberAsSeen) {
+        try {
+          // Se guarda únicamente cuando la intro terminó correctamente o el
+          // usuario decidió saltarla; nunca al comenzar la precarga.
+          sessionStorage.setItem(STORAGE_KEY, "1");
+        } catch {
+          // Ignorar restricciones de almacenamiento del navegador.
+        }
+      }
+
+      phaseRef.current = "leaving";
+      setPhase("leaving");
+
+      if (safetyTimerRef.current) {
+        clearTimeout(safetyTimerRef.current);
+        safetyTimerRef.current = null;
+      }
+
+      exitTimerRef.current = setTimeout(() => {
+        phaseRef.current = "finished";
+        setPhase("finished");
+        unlockBody();
+      }, EXIT_ANIMATION_MS);
+    },
+    [unlockBody]
+  );
+
+  const finishIntro = useCallback(() => {
+    leaveIntro(true);
+  }, [leaveIntro]);
 
   useEffect(() => {
     setHydrated(true);
-
-    FRAMES.forEach((src) => {
-      const image = new window.Image();
-      image.src = src;
-    });
 
     let alreadySeen = true;
     try {
       alreadySeen = sessionStorage.getItem(STORAGE_KEY) === "1";
     } catch {
-      // Ignorar.
+      // En almacenamiento restringido no bloqueamos al visitante.
     }
 
     const prefersReducedMotion = window.matchMedia(
@@ -70,36 +152,54 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
     ).matches;
 
     if (alreadySeen || prefersReducedMotion) {
+      phaseRef.current = "finished";
+      setPhase("finished");
       return;
     }
 
-    try {
-      sessionStorage.setItem(STORAGE_KEY, "1");
-    } catch {
-      // Ignorar.
-    }
-
-    setFrameIndex(0);
-    phaseRef.current = "playing";
-    setPhase("playing");
+    let cancelled = false;
 
     originalBodyOverflowRef.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    bodyLockedRef.current = true;
 
-    safetyTimerRef.current = setTimeout(finishIntro, SAFETY_TIMEOUT_MS);
+    setFrameIndex(0);
+    phaseRef.current = "loading";
+    setPhase("loading");
+
+    // Si la red se queda colgada, liberamos la página. No marcamos la intro
+    // como vista para que pueda volver a intentarse en una sesión posterior.
+    safetyTimerRef.current = setTimeout(() => {
+      leaveIntro(false);
+    }, SAFETY_TIMEOUT_MS);
+
+    void preloadFrames().then(() => {
+      if (cancelled || phaseRef.current !== "loading") {
+        return;
+      }
+
+      // Todos los frames están descargados y decodificados antes de iniciar.
+      setFrameIndex(0);
+      phaseRef.current = "playing";
+      setPhase("playing");
+    });
 
     return () => {
-      document.body.style.overflow = originalBodyOverflowRef.current;
+      cancelled = true;
 
       if (exitTimerRef.current) {
         clearTimeout(exitTimerRef.current);
+        exitTimerRef.current = null;
       }
 
       if (safetyTimerRef.current) {
         clearTimeout(safetyTimerRef.current);
+        safetyTimerRef.current = null;
       }
+
+      unlockBody();
     };
-  }, [finishIntro]);
+  }, [leaveIntro, unlockBody]);
 
   useEffect(() => {
     if (phase !== "playing") {
@@ -118,20 +218,8 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
     return () => clearTimeout(frameTimer);
   }, [phase, frameIndex, finishIntro]);
 
-  useEffect(() => {
-    if (phase !== "finished") {
-      return;
-    }
-
-    document.body.style.overflow = originalBodyOverflowRef.current;
-
-    if (safetyTimerRef.current) {
-      clearTimeout(safetyTimerRef.current);
-    }
-  }, [phase]);
-
   const introIsMounted = hydrated && phase !== "finished";
-  const pageIsVisible = phase !== "playing";
+  const pageIsVisible = phase === "leaving" || phase === "finished";
 
   return (
     <>
@@ -151,12 +239,18 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
           }`}
           aria-label="Animación de introducción de NASA Space Apps Guerrero"
         >
-          <div className={styles.mediaWrap}>
+          <div
+            className={`${styles.mediaWrap} ${
+              phase === "loading" ? styles.mediaWrapLoading : ""
+            }`}
+          >
             {FRAMES.map((src, index) => (
               <img
                 key={src}
                 className={`${styles.frameImage} ${
-                  index === frameIndex ? styles.frameImageActive : ""
+                  phase === "playing" && index === frameIndex
+                    ? styles.frameImageActive
+                    : ""
                 }`}
                 src={src}
                 alt=""
@@ -164,6 +258,10 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
                 draggable={false}
               />
             ))}
+
+            {phase === "loading" && (
+              <span className={styles.loadingIndicator} aria-hidden="true" />
+            )}
           </div>
 
           <button

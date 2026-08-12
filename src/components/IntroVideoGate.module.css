@@ -48,6 +48,11 @@
   aspect-ratio: 3 / 2;
 }
 
+.mediaWrapLoading {
+  display: grid;
+  place-items: center;
+}
+
 .frameImage {
   position: absolute;
   inset: 0;
@@ -67,6 +72,21 @@
 .frameImageActive {
   opacity: 1;
   transform: scale(1);
+}
+
+.loadingIndicator {
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-top-color: rgba(255, 255, 255, 0.88);
+  border-radius: 50%;
+  animation: introLoadingSpin 720ms linear infinite;
+}
+
+@keyframes introLoadingSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .skipButton {
@@ -101,5 +121,9 @@
   .pageContent,
   .intro {
     transition-duration: 1ms;
+  }
+
+  .loadingIndicator {
+    animation-duration: 1.4s;
   }
 }
