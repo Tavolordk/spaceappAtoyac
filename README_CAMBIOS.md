@@ -59,3 +59,10 @@ npm run dev
 ## Nota de marca
 
 El diseño evita usar el logotipo institucional de NASA. Debes utilizar únicamente los materiales de NASA Space Apps autorizados y respetar las reglas de la organización global.
+
+## Intro sin video de Gemini (2026-08-12)
+- Se eliminó la dependencia de `public/intro.mp4` y del video generado externamente.
+- La intro ahora usa una secuencia local de 8 frames PNG transparentes en `public/intro-frames/`.
+- `IntroVideoGate.tsx` controla el avance de frames y mantiene el botón para saltar la intro.
+- Se corrigió el logo local para mantener el pin de ubicación dentro del círculo y junto a `Guerrero`.
+- Se eliminaron assets obsoletos de video/GIF/poster que ya no se usan.

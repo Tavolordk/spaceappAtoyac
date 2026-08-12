@@ -9,18 +9,27 @@ type IntroVideoGateProps = {
 
 type IntroPhase = "playing" | "leaving" | "finished";
 
-/**
- * Velocidad del video: 1 = normal, 2 = doble, etc.
- */
-const VIDEO_PLAYBACK_RATE = 3;
-const EXIT_ANIMATION_MS = 250;
+const FRAMES = [
+  "/intro-frames/frame-01.webp",
+  "/intro-frames/frame-02.webp",
+  "/intro-frames/frame-03.webp",
+  "/intro-frames/frame-04.webp",
+  "/intro-frames/frame-05.webp",
+  "/intro-frames/frame-06.webp",
+  "/intro-frames/frame-07.webp",
+  "/intro-frames/frame-08.webp",
+] as const;
+
+const FRAME_DURATION_MS = 180;
+const FINAL_HOLD_MS = 420;
+const EXIT_ANIMATION_MS = 300;
 const SAFETY_TIMEOUT_MS = 5_000;
 const STORAGE_KEY = "sag-intro-seen";
 
 export default function IntroVideoGate({ children }: IntroVideoGateProps) {
-  // Arranca "finished" en SSR; el efecto decide si toca mostrar la intro.
   const [phase, setPhase] = useState<IntroPhase>("finished");
   const [hydrated, setHydrated] = useState(false);
+  const [frameIndex, setFrameIndex] = useState(0);
 
   const phaseRef = useRef<IntroPhase>("finished");
   const originalBodyOverflowRef = useRef("");
@@ -44,11 +53,16 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
   useEffect(() => {
     setHydrated(true);
 
+    FRAMES.forEach((src) => {
+      const image = new window.Image();
+      image.src = src;
+    });
+
     let alreadySeen = true;
     try {
       alreadySeen = sessionStorage.getItem(STORAGE_KEY) === "1";
     } catch {
-      // Modo privado estricto: mejor no bloquear al visitante.
+      // Ignorar.
     }
 
     const prefersReducedMotion = window.matchMedia(
@@ -62,9 +76,10 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
-      // Ignorar: la intro simplemente se mostraría de nuevo.
+      // Ignorar.
     }
 
+    setFrameIndex(0);
     phaseRef.current = "playing";
     setPhase("playing");
 
@@ -85,6 +100,23 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
       }
     };
   }, [finishIntro]);
+
+  useEffect(() => {
+    if (phase !== "playing") {
+      return;
+    }
+
+    if (frameIndex >= FRAMES.length - 1) {
+      const holdTimer = setTimeout(finishIntro, FINAL_HOLD_MS);
+      return () => clearTimeout(holdTimer);
+    }
+
+    const frameTimer = setTimeout(() => {
+      setFrameIndex((current) => Math.min(current + 1, FRAMES.length - 1));
+    }, FRAME_DURATION_MS);
+
+    return () => clearTimeout(frameTimer);
+  }, [phase, frameIndex, finishIntro]);
 
   useEffect(() => {
     if (phase !== "finished") {
@@ -119,30 +151,20 @@ export default function IntroVideoGate({ children }: IntroVideoGateProps) {
           }`}
           aria-label="Animación de introducción de NASA Space Apps Guerrero"
         >
-          <video
-            className={styles.video}
-            src="/intro.mp4"
-            poster="/intro-poster.jpg"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            onLoadedMetadata={(event) => {
-              const video = event.currentTarget;
-
-              video.defaultPlaybackRate = VIDEO_PLAYBACK_RATE;
-              video.playbackRate = VIDEO_PLAYBACK_RATE;
-
-              void video.play().catch(() => {
-                // El navegador puede bloquear temporalmente el autoplay.
-              });
-            }}
-            onCanPlay={(event) => {
-              event.currentTarget.playbackRate = VIDEO_PLAYBACK_RATE;
-            }}
-            onEnded={finishIntro}
-            onError={finishIntro}
-          />
+          <div className={styles.mediaWrap}>
+            {FRAMES.map((src, index) => (
+              <img
+                key={src}
+                className={`${styles.frameImage} ${
+                  index === frameIndex ? styles.frameImageActive : ""
+                }`}
+                src={src}
+                alt=""
+                aria-hidden="true"
+                draggable={false}
+              />
+            ))}
+          </div>
 
           <button
             type="button"
